@@ -2,7 +2,6 @@ const http = require("http");
 const router = require("router")();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const color = require("colors");
 const port = 9000;
 
 router.use(bodyParser.json());
@@ -22,6 +21,12 @@ http
   });
 
 router.post("/log", (req, res, next) => {
+  const reset = `\x1b[0m`;
+  const colors = {
+    red: "\x1b[31m",
+    yellow: "\x1b[33m",
+    bgCyan: "\x1b[46m",
+  };
   try {
     const body = req.body;
 
@@ -30,13 +35,31 @@ router.post("/log", (req, res, next) => {
 
     switch (body.type) {
       case "error":
-        console.log(color.red(body.message));
+        console.log(
+          `${colors.red} ${
+            typeof body.message == "object"
+              ? JSON.stringify(body.message, null, 2)
+              : body.message
+          } ${reset}`
+        );
         break;
       case "warn":
-        console.log(color.yellow(body.message));
+        console.log(
+          `${colors.yellow} ${
+            typeof body.message == "object"
+              ? JSON.stringify(body.message, null, 2)
+              : body.message
+          } ${reset}`
+        );
         break;
       default:
-        console.log(color.bgMagenta(body.message));
+        console.log(
+          `${colors.bgCyan} ${
+            typeof body.message == "object"
+              ? JSON.stringify(body.message, null, 2)
+              : body.message
+          } ${reset}`
+        );
         break;
     }
     return res.end("request logged.");
