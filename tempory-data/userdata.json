@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "phoneNumber": "870-310-9413",
+        "status": "active",
+        "name": "Rod Shields",
+        "username": "Rod-Shields",
+        "password": "_Bz6obbIBhMvY0Y"
+    },
+    {
+        "id": 2,
+        "phoneNumber": "397-958-7122 x32001",
+        "status": "disabled",
+        "name": "Remington Upton",
+        "username": "Remington-Upton",
+        "password": "75IhEZoHUSvZc6O"
+    },
+    {
+        "id": 3,
+        "phoneNumber": "(838) 782-3152 x06920",
+        "status": "active",
+        "name": "Jarrell Maggio",
+        "username": "Jarrell-Maggio",
+        "password": "1KhJhKtADM5OnH8"
+    },
+    {
+        "id": 4,
+        "phoneNumber": "633-990-7700",
+        "status": "active",
+        "name": "Horace Gutkowski",
+        "username": "Horace-Gutkowski",
+        "password": "T4DN7_tYKhoc827"
+    },
+    {
+        "id": 5,
+        "phoneNumber": "738.760.6564 x516",
+        "status": "active",
+        "name": "Randal Ruecker",
+        "username": "Randal-Ruecker",
+        "password": "WUE48hpZePaffbd"
+    },
+    {
+        "id": 6,
+        "phoneNumber": "1-539-993-7139 x614",
+        "status": "disabled",
+        "name": "Fermin Schaefer",
+        "username": "Fermin-Schaefer",
+        "password": "ZadBJbuQY6THat7"
+    },
+    {
+        "id": 7,
+        "phoneNumber": "548.203.8705 x5558",
+        "status": "disabled",
+        "name": "Ernestina Koch",
+        "username": "Ernestina-Koch",
+        "password": "4SwQzmNSHBMQRFU"
+    },
+    {
+        "id": 8,
+        "phoneNumber": "579-885-0530 x6002",
+        "status": "active",
+        "name": "Nicholas Mueller",
+        "username": "Nicholas-Mueller",
+        "password": "vsAf3tbVd61owQu"
+    },
+    {
+        "id": 9,
+        "phoneNumber": "1-323-541-4507 x3062",
+        "status": "active",
+        "name": "Sylvia Torphy",
+        "username": "Sylvia-Torphy",
+        "password": "bdTh5dRNfYbcfbn"
+    },
+    {
+        "id": 10,
+        "phoneNumber": "1-323-541-4507 x3062",
+        "status": "active",
+        "name": "Louis Jameson",
+        "username": "Louis-Jameson",
+        "password": "bdTh5dRNfYbcfbn"
+    }
+]
