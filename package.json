@@ -5,7 +5,8 @@
   "scripts": {
     "practical1": "nodemon practical1.js",
     "fetch-practical": "nodemon fetch-practical.js",
-    "logger": "nodemon logger.js"
+    "logger": "nodemon logger.js",
+    "advance-node": "nodemon advance-nodejs/index.js"
   },
   "keywords": [],
   "author": "",
