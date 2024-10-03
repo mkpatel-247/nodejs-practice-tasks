@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "practical1.js",
   "scripts": {
-    "practical1": "node practical1.js",
-    "fetch-practical": "node fetch-practical.js",
-    "logger": "node logger.js"
+    "practical1": "nodemon practical1.js",
+    "fetch-practical": "nodemon fetch-practical.js",
+    "logger": "nodemon logger.js"
   },
   "keywords": [],
   "author": "",
