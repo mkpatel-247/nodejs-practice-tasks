@@ -19,11 +19,17 @@ const addData = (item) => {
 
 const updateData = (index, newItem) => {
   if (index >= 0) {
-    if (data.length && index < data.length) {
+    if (data.length && index < data.length && !(index > data.length - 1)) {
       // data.with(index, newItem);
-      data[index] = newItem;
+      data[index] = {
+        ...data[index],
+        item: newItem,
+      };
       return apiResponse(true, `Item update at position of ${index}.`, 200);
     }
+    console.log(
+      data.length && index < data.length && !(index > data.length - 1)
+    );
     return apiResponse(false, "First add item into array.", 400);
   }
   return apiResponse(false, "Please enter a valid input.", 400);
@@ -36,7 +42,12 @@ function callback(callbackFunc) {
 const getData = () => {
   return new Promise((resolve, reject) => {
     if (data.length) {
-      resolve(dataResponse(true, "In-memory array.", 200, data));
+      const filterData = data.filter((element) => {
+        return !element?.deleted;
+      });
+      filterData.length
+        ? resolve(dataResponse(true, "In-memory array.", 200, filterData))
+        : reject(apiResponse(true, "Empty array.", 400));
     } else {
       reject(apiResponse(true, "Empty array.", 400));
     }
@@ -52,11 +63,11 @@ const deleteData = (index) => {
         const childFork = childProcess.fork(transformChild);
 
         // Here the data from child process will be received.
-        childFork.on("addDeleteKey", function (newData) {
+        childFork.on("message", function (newData) {
           //Update the data array.
           data.splice(index, 1, newData);
           console.log("In-memory array: ", data);
-          childFork.exitCode(0);
+          childFork.kill(0);
         });
 
         childFork.send(data[index]); // Data send to child.
@@ -65,9 +76,8 @@ const deleteData = (index) => {
         reject(apiResponse(false, "Please first add data.", 400));
       }
     });
-  } 
+  }
   return apiResponse(false, "Please provide a valid input.", 400);
-
 };
 
 module.exports = { callback, addData, getData, updateData, deleteData };
