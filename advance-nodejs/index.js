@@ -7,6 +7,9 @@ router.use(bodyParser.json());
 
 const operations = require("./module/dataProcessor");
 
+/**
+ * Get data.
+ */
 router.get("/get-data", async (req, res, next) => {
   try {
     const { status, message, code, data } = await operations.getData();
@@ -24,6 +27,9 @@ router.get("/get-data", async (req, res, next) => {
   }
 });
 
+/**
+ * Add data.
+ */
 router.post("/add-data", (req, res, next) => {
   try {
     const { item } = req.body;
@@ -51,6 +57,9 @@ router.post("/add-data", (req, res, next) => {
   }
 });
 
+/**
+ * Update existing data.
+ */
 router.put("/update-item", (req, res, next) => {
   try {
     const { position, newValue } = req.body;
@@ -75,7 +84,26 @@ router.put("/update-item", (req, res, next) => {
     return res.end(
       JSON.stringify({ statusCode: res.statusCode, message: error.message })
     );
-    // res.end(JSON.stringify(error.message));
+  }
+});
+
+router.delete("/delete-item/:index", async (req, res, next) => {
+  try {
+    const { index } = req.params;
+    
+    const { status, message, code } = await operations.deleteData(index);
+
+    if (status) {
+      res.writeHead(code, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ statusCode: code, message }));
+    }
+    
+    res.writeHead(code, { "Content-Type": "application/json" });
+    throw new Error(message);
+  } catch (error) {
+    return res.end(
+      JSON.stringify({ statusCode: res.statusCode, message: error.message })
+    );
   }
 });
 
