@@ -1,4 +1,4 @@
-import { writeCsv } from "./csvCRUD.js";
+import { deleteCsv, isCsvExists, readCsv, updateCsv, writeCsv } from "./csvCRUD.js";
 import {
     copyFiles,
     createDir,
@@ -53,7 +53,13 @@ if (existsDir()) {
     // renameDir();
     // copyFiles();
     // deleteDir();
-    writeCsv();
+    if (isCsvExists()) {
+        readCsv();
+        // updateCsv(2, "Updated Name", 30);
+        // deleteCsv(2);
+    } else {
+        writeCsv();
+    }
 } else {
     createDir();
 }

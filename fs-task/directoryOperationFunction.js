@@ -6,7 +6,9 @@ import fs from "fs";
 export const createDir = () => {
     try {
         fs.mkdir("./private/dataDir/", (err) => {
-            if (err) throw err;
+            if (err) {
+                console.log('Error :>> ', err);
+            }
             console.log("dataDir is created!");
         });
     } catch (error) {
@@ -19,7 +21,9 @@ export const createDir = () => {
 export const readDir = () => {
     try {
         fs.readdir("./private/dataDir/", (err, data) => {
-            if (err) throw err;
+            if (err) {
+                console.log('Error :>> ', err);
+            }
             // console.log(fs.statSync('./private/dataDir'));
             console.log("Data dir: ", data);
         });
@@ -57,8 +61,11 @@ export const copyFiles = () => {
             "./private/copy-file/",
             { recursive: true },
             (err) => {
-                if (err) throw err;
-                console.log("All Files copied.");
+                if (err) {
+                    console.log("Error :>> ", error);
+                } else {
+                    console.log("All Files copied.");
+                }
             }
         );
     } catch (error) {
@@ -67,7 +74,15 @@ export const copyFiles = () => {
 };
 
 export const deleteDir = () => {
-    fs.rmdir("./private/dataDirectory", (err) => {
-        console.log("folder deleted");
-    });
+    try {
+        fs.rmdir("./private/dataDirectory", (err) => {
+            if (err) {
+                console.log("Error :>> ", err.message);
+            } else {
+                console.log("folder deleted");
+            }
+        });
+    } catch (error) {
+        console.log("Error :>> ", error);
+    }
 };

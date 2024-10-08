@@ -14,7 +14,9 @@ export const writeFile = () => {
             "./private/hello_async.txt",
             "Hello, World! async",
             (err) => {
-                if (err) throw err;
+                if (err) {
+                    console.log('Error :>> ', err);
+                }
                 console.log("file created!");
             }
         );
@@ -41,7 +43,9 @@ export const writeFileSync = () => {
 export const readFile = () => {
     try {
         fs.readFile("./private/hello_async.txt", "utf-8", (err, data) => {
-            if (err) throw err;
+            if (err) {
+                console.log('Error :>> ', err);
+            }
             console.log("Async read: ", data); //console.log(data.toString());
         });
     } catch (error) {
@@ -49,6 +53,9 @@ export const readFile = () => {
     }
 };
 
+/**
+ * File read using synchronous process.
+ */
 export const readFileSync = () => {
     try {
         const fileData = fs.readFileSync("./private/hello.txt");
@@ -58,6 +65,9 @@ export const readFileSync = () => {
     }
 };
 
+/**
+ * File append using synchronous process.
+ */
 export const appendFileSync = () => {
     try {
         fs.appendFileSync("./private/hello.txt", "How are you?");
@@ -67,10 +77,15 @@ export const appendFileSync = () => {
     }
 };
 
+/**
+ * File created using asynchronous process.
+ */
 export const appendFile = () => {
     try {
         fs.appendFile("./private/hello_async.txt", " How are you?", (err) => {
-            if (err) throw err;
+            if (err) {
+                console.log('Error :>> ', err);
+            }
             console.log("File appended data async.");
         });
     } catch (error) {
@@ -78,13 +93,18 @@ export const appendFile = () => {
     }
 };
 
+/**
+ * File rename using asynchronous process.
+ */
 export const renameFileAsync = () => {
     try {
         fs.rename(
             "./private/hello_async.txt",
             "./private/greeting_async.txt",
             (err) => {
-                if (err) throw err;
+                if (err) {
+                    console.log('Error :>> ', err);
+                }
                 console.log("File rename async");
             }
         );
@@ -93,6 +113,9 @@ export const renameFileAsync = () => {
     }
 };
 
+/**
+ * File created using synchronous process.
+ */
 export const renameFileSync = () => {
     try {
         fs.renameSync("./private/hello.txt", "./private/greeting.txt");
@@ -102,6 +125,9 @@ export const renameFileSync = () => {
     }
 };
 
+/**
+ * Check file exist using synchronous process.
+ */
 export const fileExistSync = () => {
     try {
         if (fs.existsSync("./private/hello.txt")) {
@@ -114,10 +140,15 @@ export const fileExistSync = () => {
     }
 };
 
+/**
+ * Check file exist using asynchronous process.
+ */
 export const fileExist = () => {
     try {
         fs.exists("./private/hello_async.txt", (err) => {
-            if (err) throw err;
+            if (err) {
+                console.log('Error :>> ', err);
+            }
             console.log("File exists async");
         });
     } catch (error) {
@@ -125,6 +156,9 @@ export const fileExist = () => {
     }
 };
 
+/**
+ * Open file using synchronous process.
+ */
 export const openFileSync = () => {
     try {
         const data = fs.openSync("./private/greeting.txt");
@@ -134,10 +168,15 @@ export const openFileSync = () => {
     }
 };
 
+/**
+ * Open file using asynchronous process.
+ */
 export const openFileAsync = () => {
     try {
         fs.open("./private/greeting_async.txt", (err, data) => {
-            if (err) throw err;
+            if (err) {
+                console.log('Error :>> ', err);
+            }
             console.log("Data async :>> ", data);
         });
     } catch (error) {
@@ -145,6 +184,9 @@ export const openFileAsync = () => {
     }
 };
 
+/**
+ * Delete file using synchronous process.
+ */
 export const deleteSync = () => {
     try {
         fs.unlinkSync("./private/greeting.txt");
@@ -154,10 +196,15 @@ export const deleteSync = () => {
     }
 };
 
+/**
+ * Delete file using asynchronous process.
+ */
 export const deleteAsync = () => {
     try {
         fs.unlink("./private/greeting_async.txt", (err, data) => {
-            if (err) throw err;
+            if (err) {
+                console.log('Error :>> ', err);
+            }
             console.log("File is deleted async!");
         });
         
