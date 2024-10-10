@@ -16,11 +16,11 @@ export const login = (req, res, next) => {
         if (loginFields(loginDetail)) {
             const dbData = getDataFromDB(USER_DB_URL);
             const { index, userDetail } = checkUserExist(dbData, loginDetail);
-            if (userDetail?.token) {
-                return res.status(200).send(successResponse(200, SUCCESS.S03));
-            }
+            // if (userDetail?.token) {
+            //     return res.status(200).send(successResponse(200, SUCCESS.S03));
+            // }
             if (index != -1) {
-                const { password, ...rest } = userDetail;
+                const { password, token, ...rest } = userDetail;
                 const newToken = generateToken(rest);
                 //Update token.
                 dbData[index] = { ...userDetail, token: newToken };
@@ -47,13 +47,16 @@ export const login = (req, res, next) => {
 export const logout = (req, res, next) => {
     try {
         const userDetails = req?.user?.data;
+        const token = req?.headers?.authorization?.split(" ")[1];
+
         const { id } = userDetails;
         if (id) {
             const dbData = getDataFromDB(USER_DB_URL);
-            const { index, details } = findLoggedInUser(dbData, id);
-            console.log(details?.token);
+            const { index, details } = findLoggedInUser(dbData, id, token);
+
             if (index != -1 && details.token) {
                 dbData[index] = { ...details, token: "" };
+                addDataIntoDB(USER_DB_URL, dbData);
                 return res.status(200).send(successResponse(200, SUCCESS.S05));
             } else {
                 return res.status(404).send(errorResponse(404, ERROR.E06));

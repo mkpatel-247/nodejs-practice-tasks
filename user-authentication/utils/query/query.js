@@ -29,13 +29,13 @@ export const checkUserExist = (arr, detail) => {
 /**
  * Find logged in user.
  */
-export const findLoggedInUser = (arr, id) => {
+export const findLoggedInUser = (arr, id, token) => {
     const details = arr.find((user) => {
-        return user.id == id;
+        return user.id == id && user.token == token;
     });
 
     const index = arr.findIndex((user) => {
-        return user.id == id;
+        return user.id == id && user.token == token;
     });
     return { index, details };
 };
