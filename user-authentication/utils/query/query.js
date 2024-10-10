@@ -25,3 +25,17 @@ export const checkUserExist = (arr, detail) => {
     });
     return { index, userDetail };
 };
+
+/**
+ * Find logged in user.
+ */
+export const findLoggedInUser = (arr, id) => {
+    const details = arr.find((user) => {
+        return user.id == id;
+    });
+
+    const index = arr.findIndex((user) => {
+        return user.id == id;
+    });
+    return { index, details };
+};

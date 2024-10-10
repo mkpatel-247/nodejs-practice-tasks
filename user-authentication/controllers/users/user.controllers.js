@@ -9,24 +9,25 @@ import { duplicateUserCheck } from "../../utils/query/query.js";
 import { errorResponse, successResponse } from "../../utils/apiResponse.js";
 
 /**
- * Add user into DB.
+ * Register user into DB.
  */
-export const userRegister = (req, res, next) => {
+export const addUser = (req, res, next) => {
     try {
         const insertUserData = req.body;
         if (allowedFields(insertUserData)) {
             const dbData = getDataFromDB(USER_DB_URL);
             if (!duplicateUserCheck(dbData, insertUserData)) {
                 dbData.push({ ...insertUserData, id: v4(), token: "" });
-                if (addDataIntoDB(USER_DB_URL, dbData)) {
+                const isErrorExist = addDataIntoDB(USER_DB_URL, dbData);
+                if (!isErrorExist?.message) {
                     return res
                         .status(201)
                         .send(successResponse(201, SUCCESS.S01));
                 } else {
-                    return next("Server error.");
+                    throw new Error(isErrorExist);
                 }
             }
-            return res.status(400).send(errorResponse(400, ERROR.E02));
+            return res.status(403).send(errorResponse(403, ERROR.E02));
         } else {
             return res.status(400).send(errorResponse(400, ERROR.E01));
         }
@@ -38,4 +39,16 @@ export const userRegister = (req, res, next) => {
 /**
  * Get detail of logged in user.
  */
-export const userDetail = () => {};
+export const userDetail = (req, res, next) => {
+    try {
+        const userDetails = req?.user?.data;
+        if (userDetails) {
+            return res
+                .status(200)
+                .send(successResponse(200, SUCCESS.S04, userDetails));
+        }
+        throw new Error("Unexpected error.");
+    } catch (error) {
+        return next(error);
+    }
+};

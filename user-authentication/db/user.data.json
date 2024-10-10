@@ -1,1 +1,42 @@
-[{"firstName":"meet.p","lastName":"patel","username":"meet-patel","password":"123465789","id":"347523d7-b7ac-4822-b47b-776712184210","token":""},{"firstName":"yash","lastName":"panchal","username":"yash","password":"123465789","id":"88e48b8a-6a34-427c-abe4-ee27210bef82","token":"eyJhbGciOiJIUzI1NiJ9.eWFzaA.khrQx83MtmfeRvgGRkFcyRoJ_ynfrp8G675GQrTZawQ"},{"firstName":"shyam","lastName":"joshi","username":"shyam","password":"123465789","id":"704fec29-edf3-437f-9019-cc1d4b9046f3","token":""}]
+[
+    {
+        "firstName": "meet.p",
+        "lastName": "patel",
+        "username": "meet-patel",
+        "password": "123465789",
+        "id": "347523d7-b7ac-4822-b47b-776712184210",
+        "token": ""
+    },
+    {
+        "firstName": "yash",
+        "lastName": "panchal",
+        "username": "yash",
+        "password": "123465789",
+        "id": "88e48b8a-6a34-427c-abe4-ee27210bef82",
+        "token": ""
+    },
+    {
+        "firstName": "shyam",
+        "lastName": "joshi",
+        "username": "shyam",
+        "password": "123465789",
+        "id": "704fec29-edf3-437f-9019-cc1d4b9046f3",
+        "token": ""
+    },
+    {
+        "firstName": "Viral",
+        "lastName": "Singh",
+        "username": "viral.s",
+        "password": "qwerty",
+        "id": "ec11a421-b988-417a-978e-d453fb972866",
+        "token": ""
+    },
+    {
+        "firstName": "Vivek",
+        "lastName": "Kerai",
+        "username": "vivek",
+        "password": "123456",
+        "id": "cfd60dc4-6b43-4118-890e-afbed8e54a33",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImZpcnN0TmFtZSI6IlZpdmVrIiwibGFzdE5hbWUiOiJLZXJhaSIsInVzZXJuYW1lIjoidml2ZWsiLCJpZCI6ImNmZDYwZGM0LTZiNDMtNDExOC04OTBlLWFmYmVkOGU1NGEzMyIsInRva2VuIjoiIn0sImlhdCI6MTcyODU0MTMyNH0.jSc8eE-ogQnYVC3g8G_dETqCzR83ncsbcsjhyxBxflI"
+    }
+]

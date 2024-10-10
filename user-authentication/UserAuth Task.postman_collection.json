@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "bfbbd792-2226-47ab-ab32-a3cecf059ef3",
+		"name": "UserAuth Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38635788"
+	},
+	"item": [
+		{
+			"name": "User registeration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Vivek\",\n    \"lastName\": \"Kerai\",\n    \"username\": \"vivek\",\n    \"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}user/register",
+					"host": [
+						"{{BASE_URL}}user"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User detail",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImZpcnN0TmFtZSI6IlZpcmFsIiwibGFzdE5hbWUiOiJTaW5naCIsInVzZXJuYW1lIjoidmlyYWwucyIsImlkIjoiZWMxMWE0MjEtYjk4OC00MTdhLTk3OGUtZDQ1M2ZiOTcyODY2In0sImlhdCI6MTcyODUzOTE1MCwiZXhwIjoxNzI4NTM5NDUwfQ.Bb2pmNwGwcJJGIdAM1951ohdOpLikL3yTN7F8M3MbTI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}user/detail",
+					"host": [
+						"{{BASE_URL}}user"
+					],
+					"path": [
+						"detail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"viral.s\",\n    \"password\": \"qwerty\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}auth/login",
+					"host": [
+						"{{BASE_URL}}auth"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}auth/logout",
+					"host": [
+						"{{BASE_URL}}auth"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

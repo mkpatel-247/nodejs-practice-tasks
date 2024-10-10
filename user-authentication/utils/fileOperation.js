@@ -13,18 +13,20 @@ export const getDataFromDB = (file) => {
     return [];
 };
 
+/**
+ * Add data into file.
+ */
 export const addDataIntoDB = (file, data) => {
-    return false;
-    // try {
-    //     if (fs.existsSync(file)) {
-    //         fs.writeFileSync(file, JSON.stringify(data));
-    //         return true;
-    //     }
-    //     throw new Error("File not exist.");
-    // } catch (error) {
-    //     console.log("Error :>> ", error);
-    //     return false;
-    // }
+    try {
+        if (fs.existsSync(file)) {
+            fs.writeFileSync(file, JSON.stringify(data));
+            return true;
+        } else {
+            throw new Error("File not exist.");
+        }
+    } catch (error) {
+        return error;
+    }
     // else {
     //     fs.mkdir(file, (err) => {
     //         if (err) {
