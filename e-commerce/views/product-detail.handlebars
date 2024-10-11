@@ -28,43 +28,31 @@
                             <form action="" method="POST">
                                 <input type="hidden" name="product-id" value="{{id}}">
 
-                                <div class="row">
+                                {{!-- <div class="row">
                                     <div class="col-12">
                                         <h6>Quantity:</h6>
                                     </div>
                                     <div class="col-auto">
                                         <div class="input-group mb-3">
-                                            <button class="btn btn-success" type="button">-</button>
-                                            <input type="text" class="form-control" placeholder="" width="10" disabled>
-                                            <button class="btn btn-success" type="button">+</button>
+                                            <button class="btn btn-success" type="button" id="btn-minus">-</button>
+                                            <input type="text" class="form-control text-center" id="product-quantity"
+                                                value="1" style="width: 50px;" disabled>
+                                            <button class="btn btn-success" id="btn-plus" type="button">+</button>
                                         </div>
-                                        {{!-- <li class="list-inline-item"><span class="btn btn-success"
-                                                id="btn-minus">-</span>
-                                        </li>
                                     </div>
+                                </div> --}}
+                                <div class="row pb-3">
                                     <div class="col-auto">
-                                        <input class="form-control" disabled><span class="badge bg-secondary"
-                                            id="product-quantity">1</span></input>
+                                        <a type="button" class="btn btn-success" name="submit"
+                                            href="/product/{{id}}">Add To Cart</a>
                                     </div>
-                                    <div class="col-auto">
-                                        <li class="list-inline-item"><span id="increaseItem" class="btn btn-success"
-                                                id="btn-plus">+</span></li> --}}
-                                        {{!--
-                                    </div> --}}
                                 </div>
+                            </form>
                         </div>
-                        <div class="row pb-3">
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-success" name="submit" value="addtocard">Add To
-                                    Cart</button>
-                            </div>
-                        </div>
-                        </form>
                     </div>
+                    {{/with}}
                 </div>
-                {{/with}}
             </div>
         </div>
     </div>
-</div>
 </div>
