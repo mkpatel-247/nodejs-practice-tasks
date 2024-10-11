@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-12">
+        <div class="container pb-5">
+            <div class="row p-2">
+                {{> page-heading heading="Product details"}}
+                <div class="col-12 mt-2">
+                    {{#with productDetail}}
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2">{{capitalize name}}</h1>
+                            <p class="h3 py-2">{{formatPrice price}}</p>
+                            <p class="py-2">
+                                <span class="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
+                            </p>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Brand:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>{{capitalize brand}}</strong></p>
+                                </li>
+                            </ul>
+
+                            <h6>Description:</h6>
+                            <p>{{description}}</p>
+
+
+                            <form action="" method="POST">
+                                <input type="hidden" name="product-id" value="{{id}}">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6>Quantity:</h6>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="input-group mb-3">
+                                            <button class="btn btn-success" type="button">-</button>
+                                            <input type="text" class="form-control" placeholder="" width="10" disabled>
+                                            <button class="btn btn-success" type="button">+</button>
+                                        </div>
+                                        {{!-- <li class="list-inline-item"><span class="btn btn-success"
+                                                id="btn-minus">-</span>
+                                        </li>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input class="form-control" disabled><span class="badge bg-secondary"
+                                            id="product-quantity">1</span></input>
+                                    </div>
+                                    <div class="col-auto">
+                                        <li class="list-inline-item"><span id="increaseItem" class="btn btn-success"
+                                                id="btn-plus">+</span></li> --}}
+                                        {{!--
+                                    </div> --}}
+                                </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-success" name="submit" value="addtocard">Add To
+                                    Cart</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                {{/with}}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
