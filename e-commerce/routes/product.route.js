@@ -26,6 +26,7 @@ router.get("/product/:id", (req, res, next) => {
  */
 router.get("/add-to-cart/:id", (req, res, next) => {
     const { id } = req.params;
+
     // const detail = getProductById(id);
     res.redirect(`product/${id}`);
 });
