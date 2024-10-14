@@ -6,9 +6,11 @@ import helpers from "handlebars-helpers";
 import { short } from "./helpers/string.helpers.js";
 import { price } from "./helpers/number.helpers.js";
 import { formatDate } from "./helpers/date.helpers.js";
+import cors from "cors";
 
 const PORT = 8000;
 const app = express();
+app.use(cors());
 
 app.engine(
     "handlebars",

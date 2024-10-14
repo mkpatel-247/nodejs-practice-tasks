@@ -1,20 +1,106 @@
 $(function () {
-    /**
-     * When click on `+` button.
+    /*
+     * When clicking on the `+` button.
      */
-    $(document).on("click", "#btn-plus", function () {
-        const currentQuantity = document.getElementById("product-quantity");
-        console.log("currentQuantity :>> ", currentQuantity.value);
-        currentQuantity.value = parseInt(currentQuantity.value) + 1;
+    $(document).on("click", "#btn-plus", async function () {
+        const dataId = $(this).data("id");
+        const inputField = $(this)
+            .closest(".input-group")
+            .find("#product-quantity");
+        let currentQuantity = parseInt(inputField.val());
+        currentQuantity = isNaN(currentQuantity) ? 0 : currentQuantity;
+        await addUpdateItem(dataId, currentQuantity + 1);
+        inputField.val(currentQuantity + 1);
     });
+
     /**
-     * When click on `-` button.
+     * When clicking on the `-` button.
      */
-    $(document).on("click", "#btn-minus", function () {
-        const currentQuantity = document.getElementById("product-quantity");
-        console.log("currentQuantity :>> ", currentQuantity.value);
-        if (currentQuantity.value > 0) {
-            currentQuantity.value = parseInt(currentQuantity.value) - 1;
+    $(document).on("click", "#btn-minus", async function () {
+        const dataId = $(this).data("id");
+        const inputField = $(this)
+            .closest(".input-group")
+            .find("#product-quantity");
+        let currentQuantity = parseInt(inputField.val());
+        currentQuantity = isNaN(currentQuantity) ? 0 : currentQuantity;
+        if (currentQuantity > 1) {
+            const updateQuantity = currentQuantity - 1;
+            await addUpdateItem(dataId, updateQuantity);
+            inputField.val(updateQuantity);
+        }
+    });
+
+    /**
+     * Add product in cart.
+     */
+    $(document).on("click", "#add-to-cart", async function () {
+        const dataId = $(this).data("id");
+        await addUpdateItem(dataId, 1);
+    });
+
+    /**
+     * Call delete api.
+     */
+    $(document).on("click", "#remove-item", async function () {
+        const dataId = $(this).data("id");
+        try {
+            const res = await fetch(`/remove/${dataId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (res.status == 200) {
+                $(this).closest(".cart-item").remove();
+                console.log("Item removed from cart.");
+
+                // setTimeout(() => {
+                window.location.replace("/cart");
+                // }, 100);
+            } else {
+                console.error("Failed to remove item. Status:", res.status);
+            }
+        } catch (error) {
+            console.error("Error while removing item:", error.message);
         }
     });
 });
+
+/**
+ * Add/Update product in cart.
+ */
+async function addUpdateItem(id, quantity) {
+    try {
+        const res = await fetch(`/add-to-cart/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ quantity }),
+        });
+        if (res.status == 200) {
+            window.location.replace("/cart");
+            return;
+        } else {
+            console.error("Failed to add/update item. Status:", res.status);
+            return;
+        }
+    } catch (error) {
+        console.error("Error while adding/updating item:", error.message);
+        return;
+    }
+}
+
+/**
+ * Get cart details.
+ */
+async function getCartDetails() {
+    $.ajax({
+        url: `/add-to-cart/${id}`,
+        type: "POST",
+        body: JSON.stringify({ quantity }),
+        success: function (result) {
+            // Do something with the result
+        },
+    });
+}

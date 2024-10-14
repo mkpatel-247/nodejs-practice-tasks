@@ -9,10 +9,14 @@
                         <div class="card-body">
                             <h1 class="h2">{{capitalize name}}</h1>
                             <p class="h3 py-2">{{formatPrice price}}</p>
-                            <p class="py-2">
-                                <span class="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
-                            </p>
                             <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Release date:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>{{date release_date}}</strong></p>
+                                </li>
+                                <br>
                                 <li class="list-inline-item">
                                     <h6>Brand:</h6>
                                 </li>
@@ -23,31 +27,13 @@
 
                             <h6>Description:</h6>
                             <p>{{description}}</p>
-
-
-                            <form action="" method="POST">
-                                <input type="hidden" name="product-id" value="{{id}}">
-
-                                {{!-- <div class="row">
-                                    <div class="col-12">
-                                        <h6>Quantity:</h6>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="input-group mb-3">
-                                            <button class="btn btn-success" type="button" id="btn-minus">-</button>
-                                            <input type="text" class="form-control text-center" id="product-quantity"
-                                                value="1" style="width: 50px;" disabled>
-                                            <button class="btn btn-success" id="btn-plus" type="button">+</button>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                <div class="row pb-3">
-                                    <div class="col-auto">
-                                        <a type="button" class="btn btn-success" name="submit"
-                                            href="/product/{{id}}">Add To Cart</a>
-                                    </div>
+                            <div class="row pb-3">
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-primary" name="button" id="add-to-cart"
+                                        data-id="{{id}}">
+                                        <i class="bi bi-bag-plus-fill"></i> Cart</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                     {{/with}}

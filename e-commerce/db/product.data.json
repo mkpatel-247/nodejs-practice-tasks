@@ -3,35 +3,80 @@
         "id": 1,
         "name": "iPhone 14",
         "brand": "Apple",
-        "description": "The iPhone 14 Mini seems to be all ready to entice its customers with captivating images and an outstanding camera system that is installed into the device",
-        "price": 100.510231458
+        "description": "The iPhone 14 Mini seems to be all ready to entice its customers with captivating images and an outstanding camera system that is installed into the device.",
+        "price": 100.51,
+        "release_date": "2022-09-16"
     },
     {
         "id": 2,
-        "name": "samsung galaxy S23",
-        "brand": "samsung",
+        "name": "Samsung Galaxy S23",
+        "brand": "Samsung",
         "description": "The S23 Ultra offers Samsung Galaxy's most advanced camera system, tailored for nearly any lighting conditions and engineered to render incredible details. Improved Nightography capabilities transform how the Galaxy S23 series optimises photos and videos in a wide range of ambient conditions.",
-        "price": 898.1519999995151
+        "price": 898.15,
+        "release_date": "2023-02-17"
     },
     {
         "id": 3,
-        "name": "sony WH-1000XM5 headphones",
-        "brand": "sony",
+        "name": "Sony WH-1000XM5 Headphones",
+        "brand": "Sony",
         "description": "These lightweight headphones are beautifully finished in newly developed soft fit leather. This material fits snugly around the head with less pressure on the ears while keeping out external sounds. Our noiseless design with stepless slider, seamless swivel and hanger makes WH-1000XM5 a pleasure to wear.",
-        "price": 349.812054789999
+        "price": 349.81,
+        "release_date": "2022-08-10"
     },
     {
         "id": 4,
-        "name": "apple macBook pro",
-        "brand": "apple",
+        "name": "Apple MacBook Pro",
+        "brand": "Apple",
         "description": "Apple MacBook Pro is a macOS laptop with a 13.30-inch display that has a resolution of 2560x1600 pixels. It is powered by a Core i5 processor and it comes with 12GB of RAM. The Apple MacBook Pro packs 512GB of SSD storage.",
-        "price": 2000.999
+        "price": 2000.99,
+        "release_date": "2022-06-24"
     },
     {
         "id": 5,
         "name": "Amazon Echo Dot (5th Gen)",
-        "brand": "amazon",
+        "brand": "Amazon",
         "description": "5th (Latest) Generation Echo Dot with Alexa-The best sounding Echo Dot yet! With deeper bass and clearer vocals than all previous generations. Automatically turn on light when you enter the room or switch on the AC when it gets hot using in-built motion detection and temperature sensor.",
-        "price": 49.385601
+        "price": 49.39,
+        "release_date": "2022-10-20"
+    },
+    {
+        "id": 6,
+        "name": "Google Pixel 7",
+        "brand": "Google",
+        "description": "The Google Pixel 7 features a stunning display, exceptional camera capabilities, and the latest version of Android. Enjoy advanced photography with its Night Sight and Real Tone technology.",
+        "price": 599.99,
+        "release_date": "2022-10-13"
+    },
+    {
+        "id": 7,
+        "name": "Dell XPS 13",
+        "brand": "Dell",
+        "description": "The Dell XPS 13 is a premium ultrabook with a sleek design, InfinityEdge display, and high performance. It offers long battery life and excellent portability for on-the-go users.",
+        "price": 1299.99,
+        "release_date": "2023-01-15"
+    },
+    {
+        "id": 8,
+        "name": "Fitbit Charge 5",
+        "brand": "Fitbit",
+        "description": "The Fitbit Charge 5 is a health and fitness tracker with built-in GPS, heart rate monitoring, and a sleek design. It helps users stay on top of their wellness goals.",
+        "price": 179.95,
+        "release_date": "2021-10-10"
+    },
+    {
+        "id": 9,
+        "name": "Razer Blade 15",
+        "brand": "Razer",
+        "description": "The Razer Blade 15 is a powerful gaming laptop that offers an immersive gaming experience with its high refresh rate display, customizable RGB keyboard, and powerful GPU options.",
+        "price": 2499.99,
+        "release_date": "2022-04-14"
+    },
+    {
+        "id": 10,
+        "name": "Sony PlayStation 5",
+        "brand": "Sony",
+        "description": "The PlayStation 5 features ultra-high-speed SSD, ray tracing, and stunning graphics. Experience gaming like never before with exclusive titles and immersive gameplay.",
+        "price": 499.99,
+        "release_date": "2020-11-12"
     }
 ]
