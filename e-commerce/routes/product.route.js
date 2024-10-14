@@ -5,6 +5,7 @@ import {
     getAllProduct,
     getProductById,
     removeItem,
+    searchItems,
 } from "../utils/query.js";
 const router = express.Router();
 
@@ -63,6 +64,15 @@ router.delete("/remove/:id", async (req, res, next) => {
         return res.status(200).send();
     }
     return res.status(400).send();
+});
+
+/**
+ * Search api route.
+ */
+router.post("/search", async (req, res, next) => {
+    const { search } = req.body;
+    const searchList = await searchItems(search);
+    return res.status(200).send({ data: searchList });
 });
 
 export default router;

@@ -92,15 +92,28 @@ async function addUpdateItem(id, quantity) {
 }
 
 /**
- * Get cart details.
+ * Search product.
  */
-async function getCartDetails() {
-    $.ajax({
-        url: `/add-to-cart/${id}`,
-        type: "POST",
-        body: JSON.stringify({ quantity }),
-        success: function (result) {
-            // Do something with the result
-        },
-    });
+async function searchProduct() {
+    try {
+        const searchValue = document.getElementById("search-item");
+        const res = await fetch(`/search`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ search: searchValue.value }),
+        });
+
+        if (res.status == 200) {
+            const result = await res.json();
+            console.log("Data search:", result.data);
+            return result.data;
+        } else {
+            return [];
+        }
+    } catch (error) {
+        console.error("Error while searching item:", error.message);
+        return [];
+    }
 }

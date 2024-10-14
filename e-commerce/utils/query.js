@@ -156,3 +156,31 @@ export const removeItem = async (id) => {
         throw error;
     }
 };
+
+/**
+ * Search and filter the product list.
+ */
+export const searchItems = (value) => {
+    try {
+        const filePath = path.join("db", "product.data.json");
+        const bufferData = fs.readFileSync(filePath);
+        const productList = JSON.parse(bufferData);
+
+        // Normalize the search value to lowercase for case-insensitive search
+        const normalizedValue = value.toLowerCase();
+
+        const filterList = productList.filter((item) => {
+            // Check if the search value matches any of the item properties
+            return (
+                item.name.toLowerCase().includes(normalizedValue) ||
+                item.brand.toLowerCase().includes(normalizedValue) ||
+                item.description.toLowerCase().includes(normalizedValue)
+            );
+        });
+
+        return filterList;
+    } catch (error) {
+        console.error("Error while searching item:", error.message);
+        throw error; // You can choose to return an empty array instead if preferred
+    }
+};
