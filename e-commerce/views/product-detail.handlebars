@@ -29,9 +29,16 @@
                             <p>{{description}}</p>
                             <div class="row pb-3">
                                 <div class="col-auto">
-                                    <button type="button" class="btn btn-primary" name="button" id="add-to-cart"
-                                        data-id="{{id}}">
+                                    {{#if alreadyInCart}}
+                                    <a type="button" class="btn btn-outline-success" name="button" href="/cart">
+                                        Go to Cart </a>
+                                    {{else}}
+                                    <button type="button" class="btn btn-primary" name="button"
+                                        onclick="addUpdateItem({{id}}, 1)">
+                                        {{!-- id="add-to-cart"
+                                        data-id="{{id}}"> --}}
                                         <i class="bi bi-bag-plus-fill"></i> Cart</button>
+                                    {{/if}}
                                 </div>
                             </div>
                         </div>

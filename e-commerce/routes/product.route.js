@@ -4,6 +4,7 @@ import {
     cartDetails,
     getAllProduct,
     getProductById,
+    isCartEmpty,
     removeItem,
     searchItems,
 } from "../utils/query.js";
@@ -14,6 +15,7 @@ const router = express.Router();
  */
 router.get("/", (req, res, next) => {
     const productList = getAllProduct();
+    // displayProducts(productList);
     res.render("index", { products: productList });
 });
 
@@ -23,9 +25,13 @@ router.get("/", (req, res, next) => {
 router.get("/product/:id", (req, res, next) => {
     const { id } = req.params;
     const detail = getProductById(id);
+    const presentInCart = isCartEmpty().includes(id);
+    console.log("Present in cart: ", presentInCart);
+
     // isCartEmpty();
     res.render("product-detail", {
         productDetail: detail,
+        alreadyInCart: presentInCart
     });
 });
 
@@ -36,10 +42,16 @@ router.post("/add-to-cart/:id", async (req, res, next) => {
     const { id } = req.params;
     const { quantity } = req.body;
     if (await addToCart(id, quantity)) {
-        return res.status(200).send();
-    } else {
-        return res.status(400).send();
+        return res.status(200).send({
+            status: 200,
+            success: true,
+        });
     }
+    return res.status(400).send({
+        status: 400,
+        success: false,
+    });
+
 });
 
 /**
@@ -70,8 +82,9 @@ router.delete("/remove/:id", async (req, res, next) => {
  * Search api route.
  */
 router.post("/search", async (req, res, next) => {
-    const { search } = req.body;
-    const searchList = await searchItems(search);
+    const { searchQuery } = req.query;
+    console.log("Search: ", searchQuery);
+    const searchList = await searchItems(searchQuery);
     return res.status(200).send({ data: searchList });
 });
 

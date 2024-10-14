@@ -53,19 +53,9 @@ export const addToCart = async (id, quantity) => {
                     quantity: 1,
                 });
             }
-            let status = false;
-            await fs.writeFile(
-                path.join("db", "cart.data.json"),
-                JSON.stringify(cartDetails),
-                (err, data) => {
-                    if (err) {
-                        console.log("Error while add to cart: ", err);
-                        status = false;
-                    }
-                    status = true;
-                }
-            );
-            return status;
+
+            await fs.promises.writeFile(path.join("db", "cart.data.json"), JSON.stringify(cartDetails));
+            return true;
         } else {
             throw new Error("Product not exist in DB.");
         }
