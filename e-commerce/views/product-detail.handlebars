@@ -1,51 +1,42 @@
-<div class="row">
-    <div class="col-12">
-        <div class="container pb-5">
-            <div class="row p-2">
-                {{> page-heading heading="Product details"}}
-                <div class="col-12 mt-2">
-                    {{#with productDetail}}
-                    <div class="card">
-                        <div class="card-body">
-                            <h1 class="h2">{{capitalize name}}</h1>
-                            <p class="h3 py-2">{{formatPrice price}}</p>
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <h6>Release date:</h6>
-                                </li>
-                                <li class="list-inline-item">
-                                    <p class="text-muted"><strong>{{date release_date}}</strong></p>
-                                </li>
-                                <br>
-                                <li class="list-inline-item">
-                                    <h6>Brand:</h6>
-                                </li>
-                                <li class="list-inline-item">
-                                    <p class="text-muted"><strong>{{capitalize brand}}</strong></p>
-                                </li>
-                            </ul>
+<div class="row p-2">
+    {{> page-heading heading="Product details"}}
+    <div class="col-12 mt-2">
+        {{#with productDetail}}
+        <div class="card">
+            <div class="card-body">
+                <h1 class="h2">{{capitalize name}}</h1>
+                <p class="h3 py-2">{{formatPrice price}}</p>
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <h6>Release date:</h6>
+                    </li>
+                    <li class="list-inline-item">
+                        <p class="text-muted"><strong>{{date release_date}}</strong></p>
+                    </li>
+                    <br>
+                    <li class="list-inline-item">
+                        <h6>Brand:</h6>
+                    </li>
+                    <li class="list-inline-item">
+                        <p class="text-muted"><strong>{{capitalize brand}}</strong></p>
+                    </li>
+                </ul>
 
-                            <h6>Description:</h6>
-                            <p>{{description}}</p>
-                            <div class="row pb-3">
-                                <div class="col-auto">
-                                    {{#if alreadyInCart}}
-                                    <a type="button" class="btn btn-outline-success" name="button" href="/cart">
-                                        Go to Cart </a>
-                                    {{else}}
-                                    <button type="button" class="btn btn-primary" name="button"
-                                        onclick="addUpdateItem({{id}}, 1)">
-                                        {{!-- id="add-to-cart"
-                                        data-id="{{id}}"> --}}
-                                        <i class="bi bi-bag-plus-fill"></i> Cart</button>
-                                    {{/if}}
-                                </div>
-                            </div>
-                        </div>
+                <h6>Description:</h6>
+                <p>{{description}}</p>
+                <div class="row pb-3">
+                    <div class="col-auto">
+                        {{#if alreadyInCart}}
+                        <a type="button" class="btn btn-outline-success" name="button" href="/cart">
+                            Go to Cart </a>
+                        {{else}}
+                        <button type="button" class="btn btn-primary" name="button" onclick="addUpdateItem({{id}}, 1)">
+                            <i class="bi bi-bag-plus-fill"></i> Cart</button>
+                        {{/if}}
                     </div>
-                    {{/with}}
                 </div>
             </div>
         </div>
+        {{/with}}
     </div>
 </div>

@@ -1,6 +1,5 @@
 <div class="row p-3">
     {{> page-heading heading="Featured Products"}}
-    {{#if products}}
     {{#each products}}
     <div class="col-lg-4 col-md-6 mb-4">
         <div class="card shadow-sm border-0 h-100">
@@ -17,9 +16,4 @@
         </div>
     </div>
     {{/each}}
-    {{!-- {{else}} --}}
-    <div id="product-list">
-
-    </div>
-    {{/if}}
 </div>

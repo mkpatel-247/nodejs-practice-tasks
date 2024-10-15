@@ -11,7 +11,7 @@ export const getAllProduct = () => {
         );
         return JSON.parse(bufferData);
     } catch (error) {
-        console.log("Error :>> ", error.message);
+        console.log("Error getAllProduct :>> ", error.message);
         return [];
     }
 };
@@ -29,7 +29,7 @@ export const getProductById = (id) => {
             return product.id == id;
         });
     } catch (error) {
-        console.log("Error :>> ", error.message);
+        console.log("Error getProductById :>> ", error.message);
         return [];
     }
 };
@@ -54,34 +54,37 @@ export const addToCart = async (id, quantity) => {
                 });
             }
 
-            await fs.promises.writeFile(path.join("db", "cart.data.json"), JSON.stringify(cartDetails));
+            await fs.promises.writeFile(
+                path.join("db", "cart.data.json"),
+                JSON.stringify(cartDetails)
+            );
             return true;
         } else {
             throw new Error("Product not exist in DB.");
         }
     } catch (error) {
-        console.log("Error :>> ", error.message);
+        console.log("Error addToCart :>> ", error.message);
         return false;
     }
 };
 
 /**
- * Check the cart is empty or not.
+ * Check product is present into cart or not.
  */
-export const isCartEmpty = () => {
+export const checkProductPresentInCart = (id) => {
     try {
         const bufferData = fs.readFileSync(path.join("db", "cart.data.json"));
         const cartDetails = JSON.parse(bufferData);
         let productIds = [];
         if (cartDetails.length) {
-            cartDetails.forEach((element) => {
-                productIds.push(element.id);
+            return cartDetails.findIndex((element) => {
+                return element.id == id;
             });
         }
-        return productIds;
+        return false;
     } catch (error) {
-        console.log("Error isCartEmpty :>> ", error.message);
-        return [];
+        console.log("Error checkProductPresentInCart :>> ", error.message);
+        return false;
     }
 };
 
@@ -156,11 +159,10 @@ export const searchItems = (value) => {
         const bufferData = fs.readFileSync(filePath);
         const productList = JSON.parse(bufferData);
 
-        // Normalize the search value to lowercase for case-insensitive search
+        // Normalize the search value to lowercase.
         const normalizedValue = value.toLowerCase();
 
         const filterList = productList.filter((item) => {
-            // Check if the search value matches any of the item properties
             return (
                 item.name.toLowerCase().includes(normalizedValue) ||
                 item.brand.toLowerCase().includes(normalizedValue) ||
