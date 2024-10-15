@@ -1,1 +1,22 @@
-[{"departmentId":101,"departmentName":"Engineering"},{"departmentId":102,"departmentName":"Product"},{"departmentId":103,"departmentName":"Human Resources"},{"departmentId":104,"departmentName":"Marketing"},{"departmentId":105,"departmentName":"Sales"}]
+[
+    {
+        "id": 101,
+        "name": "Engineering"
+    },
+    {
+        "id": 102,
+        "name": "Product"
+    },
+    {
+        "id": 103,
+        "name": "Human Resources"
+    },
+    {
+        "id": 104,
+        "name": "Marketing"
+    },
+    {
+        "id": 105,
+        "name": "Sales"
+    }
+]

@@ -3,4 +3,5 @@ export const SUCCESS = {
     S02: "Designation detail fetched.",
     S03: "New employee added.",
     S04: "Employee deleted.",
+    S05: "Employee details.",
 };

@@ -2,6 +2,8 @@
     {{> page-heading heading="List of employee"}}
     <div class="row py-3">
         <div class="col">
+
+            {{#if employee}}
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -19,13 +21,13 @@
                 <tbody>
                     {{#each employee}}
                     <tr>
-                        <th scope="row">1</th>
-                        <td>{{this.name}}</td>
+                        <th scope="row">{{@index}}</th>
+                        <td>{{capitalize this.name}}</td>
                         <td>{{this.email}}</td>
                         <td>{{this.joiningDate}}</td>
-                        <td>{{this.department}}</td>
-                        <td>{{this.designation}}</td>
-                        <td>{{this.gender}}</td>
+                        <td>{{capitalize this.gender}}</td>
+                        <td>{{findName "department" this.department}}</td>
+                        <td>{{findName "designation" this.designation}}</td>
                         <td>
                             {{#if this.salary}}
                             {{this.salary}}
@@ -33,19 +35,28 @@
                             -
                             {{/if}}
                         </td>
+
                         <td>
-                        <td>
-                            {{!-- <button class="btn btn-outline-info me-2" onclick="viewEventDetails(item)">
-                                <i class="bi bi-info-circle"></i>
-                            </button> --}}
-                            <button class="btn btn-outline-danger" type="button" onclick="deleteEmployee({{this.id}})">
+                            <button class="btn btn-sm btn-outline-primary" type="button" id="update-employee"
+                                value="{{this.id}}">
+                                <i class="bi bi-pen"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" type="button"
+                                onclick="removeEmployee('{{this.id}}')">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </td>
-                        </td>
+
                     </tr>
                     {{/each}}
                 </tbody>
+                {{else}}
+                {{!--
+                <hr> --}}
+                <h3 class="text-center">No Record Found</h3>
+                {{!--
+                <hr> --}}
+                {{/if}}
             </table>
         </div>
     </div>

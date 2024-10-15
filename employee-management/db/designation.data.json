@@ -1,1 +1,26 @@
-[{"designationId":1,"designationName":"Software Engineer"},{"designationId":2,"designationName":"Product Manager"},{"designationId":3,"designationName":"QA Engineer"},{"designationId":4,"designationName":"HR Specialist"},{"designationId":5,"designationName":"UX Designer"},{"designationId":6,"designationName":"BA - Business Analyst"}]
+[
+    {
+        "id": 1,
+        "name": "Software Engineer"
+    },
+    {
+        "id": 2,
+        "name": "Product Manager"
+    },
+    {
+        "id": 3,
+        "name": "QA Engineer"
+    },
+    {
+        "id": 4,
+        "name": "HR Specialist"
+    },
+    {
+        "id": 5,
+        "name": "UX Designer"
+    },
+    {
+        "id": 6,
+        "name": "BA - Business Analyst"
+    }
+]

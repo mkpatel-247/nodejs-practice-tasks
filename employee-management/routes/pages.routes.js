@@ -13,10 +13,6 @@ router.get("/", (req, res, next) => {
     const getDesignation = query.findAll(DESIGNATION_DB_URL);
     const getDepartment = query.findAll(DEPARTMENT_DB_URL);
 
-    getEmployee.map((record) => {
-        return record.department == departmentId;
-    });
-
     res.render("list", { employee: getEmployee });
 });
 

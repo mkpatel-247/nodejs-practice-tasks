@@ -16,9 +16,9 @@
         <div class="col-md-4">
             <label for="department" class="form-label">Department</label>
             <select id="emp-department" class="form-select" required>
-                <option selected>Choose...</option>
+                <option value="" selected>Choose...</option>
                 {{#each department}}
-                <option value="{{this.departmentId}}">{{this.departmentName}}</option>
+                <option value="{{this.id}}">{{this.name}}</option>
                 {{/each}}
             </select>
         </div>
@@ -27,31 +27,45 @@
             <select id="emp-designation" class="form-select" required>
                 <option value="" selected>Choose...</option>
                 {{#each designation}}
-                <option value="{{this.designationId}}">{{this.designationName}}</option>
+                <option value="{{this.id}}">{{this.name}}</option>
                 {{/each}}
             </select>
         </div>
-        <div class="col-md-6">
-            <label for="inputCity" class="form-label">Gender</label>
-            <div class="d-flex gap-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="emp-gender" id="gender-male" value="male"
-                        checked>
-                    <label class="form-check-label" for="gender">
-                        Male
-                    </label>
+        <div class="col-md-5">
+            <div class="form-group row d-flex align-items-center">
+                <label for="gender" class="col-md-2 col-form-label">Gender</label>
+                <div class="col-md-6">
+                    <div class="d-flex gap-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="emp-gender" id="gender-male" value="male"
+                                checked>
+                            <label class="form-check-label" for="gender">
+                                Male
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="emp-gender" id="gender-female"
+                                value="female">
+                            <label class="form-check-label" for="gender">
+                                Female
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="emp-gender" id="gender-other"
+                                value="other">
+                            <label class="form-check-label" for="gender">
+                                Other
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="emp-gender" id="gender-female" value="female">
-                    <label class="form-check-label" for="gender">
-                        Female
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="emp-gender" id="gender-other" value="other">
-                    <label class="form-check-label" for="gender">
-                        Other
-                    </label>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="form-group row d-flex align-items-center">
+                <label for="salary" class="col-md-2 col-form-label">Salary</label>
+                <div class="col-md-5">
+                    <input type="number" name="emp-salary" class="form-control" id="emp-salary" required>
                 </div>
             </div>
         </div>

@@ -1,10 +1,1 @@
-[
-    {
-        "name": "Meet",
-        "email": "meet.p@webcodegebie.com",
-        "joiningDate": "2024-10-01",
-        "department": "101",
-        "designation": "1",
-        "gender": "male"
-    }
-]
+[{"id":"d46f3a8c-bf24-441c-b7dd-5e69e5a9f37a","name":"Dhvani","email":"dhvani.p@webcodege.in","joiningDate":"2024-09-04","department":"101","designation":"1","gender":"female","salary":""},{"id":"65caa256-7dd0-4738-97cf-93c08c85019c","name":"meet","email":"meet.p@webcodegenie.com","joiningDate":"2024-10-17","department":"103","designation":"4","gender":"male","salary":""}]

@@ -2,35 +2,27 @@ $(function () {
     $(document).on("submit", "#add-employee-form", async function (event) {
         event.preventDefault(); // Prevent the default form submission
 
-        // Get form field values using jQuery
         const name = $("#emp-name").val();
         const email = $("#emp-email").val();
         const joiningDate = $("#emp-joining-date").val();
         const department = $("#emp-department").val();
         const designation = $("#emp-designation").val();
-        const gender = $("input[name='emp-gender']:checked").val(); // Get selected gender
+        const gender = $("input[name='emp-gender']:checked").val();
 
-        // Create a data object
-        const formData = {
-            name: name,
-            email: email,
-            joiningDate: joiningDate,
-            department: department,
-            designation: designation,
-            gender: gender,
-        };
+        // // Create a data object
+        // const formData = { name, email, joiningDate, department, designation, gender };
 
-        // Make an API call
+        // Make an API call to add employee.
         try {
             const res = await fetch(`/api/add-employee/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData), // Send collected form data
+                body: JSON.stringify({ name, email, joiningDate, department, designation, gender }),
             });
             if (res.status === 200) {
-                window.location.replace("/"); // Redirect on successful submission
+                window.location.replace("/"); // Redirect on successful to list page.
             } else {
                 console.error("Failed to submit form. Status:", res.status);
             }
@@ -40,42 +32,50 @@ $(function () {
     });
 
     /**
-     * Add product in cart.
+     * Trim the name input field.
      */
-    $(document).on("click", "#add-to-cart", function () {
-        const dataId = $(this).data("id");
-        addUpdateItem(dataId, 1);
+    $(document).on("blur", "#emp-name", function (event) {
+        $("#emp-name").val(event.currentTarget.value.trim());
+    });
+    /**
+     * Trim the email input field.
+     */
+    $(document).on("blur", "#emp-email", function (event) {
+        $("#emp-email").val(event.currentTarget.value.trim());
     });
 
-    /**
-     * Call delete api.
-     */
-    $(document).on("click", "#remove-item", async function () {
-        const dataId = $(this).data("id");
+    $(document).on("click", "#update-employee", async function (event) {
         try {
-            const res = await fetch(`/remove/${dataId}`, {
-                method: "DELETE",
+            const id = event?.target?.value;
+            log
+            const res = await fetch(`/api/get-employee/${id}/`, {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                 },
-            });
+            })
             if (res.status == 200) {
-                // $(this).closest(".cart-item").remove();
+                const result = await res.json();
+                console.log("Result:>>>>>> ", result.data);
 
-                window.location.replace("/cart");
-            } else {
-                console.error("Failed to remove item. Status:", res.status);
+                $("#emp-name").val(result.data.name);
+                $("#emp-email").val(result.data.email);
+                $("#emp-joining-date").val(result.data.joiningDate);
+                $("#emp-department").val(result.data.department);
+                $("#emp-designation").val(result.data.designation);
+                $("#emp-salary").val(result.data.salary);
+                window.location.replace(`/add-emp?id=${id}`)
             }
         } catch (error) {
-            console.error("Error while removing item:", error.message);
+
         }
-    });
+    })
 });
 
 /**
- * Add/Update product in cart.
+ * Call api to delete employee
  */
-async function deleteEmployee(id) {
+async function removeEmployee(id) {
     try {
         const res = await fetch(`/api/delete-employee/${id}`, {
             method: "DELETE",
@@ -89,35 +89,11 @@ async function deleteEmployee(id) {
             window.location.replace("/");
             return;
         } else {
-            console.error("Failed to add/update item. Status:", res.status);
+            console.error("Failed to delete item. Status:", res.status);
             return;
         }
     } catch (error) {
-        console.error("Error while adding/updating item:", error.message);
+        console.error("Error while deleting item:", error.message);
         return;
-    }
-}
-
-/**
- * Search product.
- */
-async function searchProduct() {
-    try {
-        const searchValue = document.getElementById("search-item");
-        const res = await fetch(`/?searchQuery=${searchValue.value.trim()}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        if (res.status == 200) {
-            window.location.replace(`/?searchQuery=${searchValue.value}`);
-        } else {
-            throw new Error();
-        }
-    } catch (error) {
-        console.error("Error while searching item:", error.message);
-        return [];
     }
 }
