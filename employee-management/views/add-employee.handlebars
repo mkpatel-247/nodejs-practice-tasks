@@ -1,0 +1,63 @@
+<div class="container">
+    {{> page-heading heading="Add employee form"}}
+    <form id="add-employee-form" class="row g-3">
+        <div class="col-md-6">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="emp-name" placeholder="Enter your name." required>
+        </div>
+        <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="emp-email" placeholder="Enter your email." required>
+        </div>
+        <div class="col-md-4">
+            <label for="joiningDate" class="form-label">Joining date</label>
+            <input type="date" class="form-control" id="emp-joining-date" required>
+        </div>
+        <div class="col-md-4">
+            <label for="department" class="form-label">Department</label>
+            <select id="emp-department" class="form-select" required>
+                <option selected>Choose...</option>
+                {{#each department}}
+                <option value="{{this.departmentId}}">{{this.departmentName}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="designation" class="form-label">Designation</label>
+            <select id="emp-designation" class="form-select" required>
+                <option value="" selected>Choose...</option>
+                {{#each designation}}
+                <option value="{{this.designationId}}">{{this.designationName}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="inputCity" class="form-label">Gender</label>
+            <div class="d-flex gap-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="emp-gender" id="gender-male" value="male"
+                        checked>
+                    <label class="form-check-label" for="gender">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="emp-gender" id="gender-female" value="female">
+                    <label class="form-check-label" for="gender">
+                        Female
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="emp-gender" id="gender-other" value="other">
+                    <label class="form-check-label" for="gender">
+                        Other
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Add Employee</button>
+            <button type="reset" class="btn btn-outline-danger">Reset</button>
+        </div>
+    </form>
+</div>

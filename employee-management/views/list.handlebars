@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    {{> page-heading heading="List of employee"}}
+    <div class="row py-3">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Joining Date</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Salary</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each employee}}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>{{this.name}}</td>
+                        <td>{{this.email}}</td>
+                        <td>{{this.joiningDate}}</td>
+                        <td>{{this.department}}</td>
+                        <td>{{this.designation}}</td>
+                        <td>{{this.gender}}</td>
+                        <td>
+                            {{#if this.salary}}
+                            {{this.salary}}
+                            {{else}}
+                            -
+                            {{/if}}
+                        </td>
+                        <td>
+                        <td>
+                            {{!-- <button class="btn btn-outline-info me-2" onclick="viewEventDetails(item)">
+                                <i class="bi bi-info-circle"></i>
+                            </button> --}}
+                            <button class="btn btn-outline-danger" type="button" onclick="deleteEmployee({{this.id}})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
