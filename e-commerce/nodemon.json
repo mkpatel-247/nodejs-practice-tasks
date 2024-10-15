@@ -1,0 +1,15 @@
+{
+    "watch": [
+        "js",
+        "json",
+        "html"
+    ],
+    "env": {
+        "NODE_ENV": "development"
+    },
+    "ext": "js,json,html",
+    "verbose": true,
+    "delay": "5000",
+    "colors": true,
+    "exec": "node index.js"
+}

@@ -4,13 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon --config nodemon.json",
+    "prod": "pm2 start ecosystem.config.cjs"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "~4.16.1",
     "express-handlebars": "^8.0.1",
     "handlebars-helpers": "^0.10.0",
-    "moment": "^2.30.1"
+    "moment": "^2.30.1",
+    "pm2": "^5.4.2",
+    "winston": "^3.15.0"
   }
 }

@@ -8,7 +8,7 @@ import { price } from "./helpers/number.helpers.js";
 import { formatDate } from "./helpers/date.helpers.js";
 import cors from "cors";
 
-const PORT = 8000;
+const PORT = 3000;
 const app = express();
 app.use(cors());
 
@@ -35,7 +35,7 @@ app.use(express.static(path.join("public")));
 
 app.use("/", productRoutes);
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
     console.log(
         `Server is running on port ${PORT} \nPress ctrl + click on http://localhost:${PORT}/`
     );
@@ -43,6 +43,7 @@ app.listen(PORT, () => {
 
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
+    logger.error("Uncaught exception...");
     console.log("Uncaught exception...");
 
     res.render("error");

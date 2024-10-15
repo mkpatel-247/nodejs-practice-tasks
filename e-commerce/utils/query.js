@@ -1,5 +1,7 @@
 import fs from "fs";
 import path from "path";
+import { logger } from "./logger.js";
+import { loggers } from "winston";
 
 /**
  * Get all product details.
@@ -11,6 +13,7 @@ export const getAllProduct = () => {
         );
         return JSON.parse(bufferData);
     } catch (error) {
+        logger.error(`Error in getAllProduct: ${error.message}`);
         console.log("Error getAllProduct :>> ", error.message);
         return [];
     }
@@ -25,10 +28,12 @@ export const getProductById = (id) => {
             path.join("db", "product.data.json")
         );
         const productList = JSON.parse(bufferData);
+        logger.info(`getProductById() where id :>> : ${id}`);
         return productList.find((product) => {
             return product.id == id;
         });
     } catch (error) {
+        logger.error(`Error in getProductById: ${error.message}`);
         console.log("Error getProductById :>> ", error.message);
         return [];
     }
@@ -45,15 +50,20 @@ export const addToCart = async (id, quantity) => {
         if (productDetails?.id) {
             const currentIndex = cartDetails.findIndex((item) => item.id == id);
             if (currentIndex != -1) {
+                logger.info(
+                    `Update in cart product id: ${id}, quantity: ${quantity}`
+                );
                 quantity = quantity;
                 cartDetails[currentIndex] = { id, quantity };
             } else {
+                logger.info(
+                    `Add in cart product id: ${id}, quantity: ${quantity}`
+                );
                 cartDetails.push({
                     id: productDetails?.id,
                     quantity: 1,
                 });
             }
-
             await fs.promises.writeFile(
                 path.join("db", "cart.data.json"),
                 JSON.stringify(cartDetails)
@@ -63,6 +73,7 @@ export const addToCart = async (id, quantity) => {
             throw new Error("Product not exist in DB.");
         }
     } catch (error) {
+        logger.error("Problem in add to cart: ", error.message);
         console.log("Error addToCart :>> ", error.message);
         return false;
     }
@@ -75,16 +86,16 @@ export const checkProductPresentInCart = (id) => {
     try {
         const bufferData = fs.readFileSync(path.join("db", "cart.data.json"));
         const cartDetails = JSON.parse(bufferData);
-        let productIds = [];
+        logger.info(`Check length of cart: ${cartDetails.length}`);
         if (cartDetails.length) {
             return cartDetails.findIndex((element) => {
                 return element.id == id;
             });
         }
-        return false;
+        return -1;
     } catch (error) {
-        console.log("Error checkProductPresentInCart :>> ", error.message);
-        return false;
+        logger.error(`Error checkProductPresentInCart :>> ${error.message}`);
+        return -1;
     }
 };
 
@@ -120,6 +131,7 @@ export const cartDetails = () => {
         });
         return shoppingCart;
     } catch (error) {
+        loggers.error(` Error while fetching cartDetails: ${error.message}`);
         console.log("Error :>> ", error.message);
         return [];
     }
@@ -142,9 +154,10 @@ export const removeItem = async (id) => {
         // Remove the item from the cart
         cartDetails.splice(productIndex, 1);
         await fs.promises.writeFile(filePath, JSON.stringify(cartDetails));
-
+        logger.info(`Product remove from cart. Product id: ${id}`);
         return true; // Item removed successfully
     } catch (error) {
+        loggers.error(` Error while removing item: ${error.message}`);
         console.error("Error while removing item:", error.message);
         throw error;
     }
@@ -172,6 +185,7 @@ export const searchItems = (value) => {
 
         return filterList;
     } catch (error) {
+        loggers.error(`Error while searching item: ${error.message}`);
         console.error("Error while searching item:", error.message);
         throw error; // You can choose to return an empty array instead if preferred
     }

@@ -8,6 +8,7 @@ import {
     removeItem,
     searchItems,
 } from "../utils/query.js";
+import { logger } from "../utils/logger.js";
 const router = express.Router();
 
 /**
@@ -19,6 +20,7 @@ router.get("/", async (req, res, next) => {
     const { searchQuery } = req.query;
 
     if (searchQuery) {
+        logger.info(`Search query: ${searchQuery}`);
         const searchList = await searchItems(searchQuery);
         res.render("index", { products: searchList, searchValue: searchQuery });
     } else {
@@ -33,6 +35,8 @@ router.get("/product/:id", (req, res, next) => {
     const { id } = req.params;
     const detail = getProductById(id);
     const presentInCart = checkProductPresentInCart(id);
+    logger.info("presentInCart: ", presentInCart);
+
     const products = {
         ...detail,
         alreadyInCart: presentInCart != -1,
@@ -72,6 +76,7 @@ router.post("/add-to-cart/:id", async (req, res, next) => {
             success: true,
         });
     }
+
     return res.status(400).send({
         status: 400,
         success: false,
