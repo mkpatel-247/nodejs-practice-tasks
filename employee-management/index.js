@@ -1,16 +1,15 @@
 import express from "express";
 import { engine } from "express-handlebars";
 import path from "path";
-// import cors from "cors";
 import { isDbExists } from "./config/db.config.js";
 import pageRoutes from "./routes/pages.routes.js";
 import apiRoutes from "./routes/api.routes.js";
-import { searchNameField } from "./helper/findName.helper.js";
+import { searchNameField } from "./helpers/findName.helper.js";
 import helpers from "handlebars-helpers";
+import { formatDate } from "./helpers/formatDate.helper.js";
 
 const PORT = 3000;
 const app = express();
-// app.use(cors());
 
 app.engine(
     "handlebars",
@@ -21,8 +20,7 @@ app.engine(
         helpers: {
             helpers: helpers(),
             findName: searchNameField,
-            // formatPrice: price,
-            // date: formatDate,
+            date: formatDate,
         },
     })
 );

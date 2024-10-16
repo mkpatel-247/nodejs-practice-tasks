@@ -1,9 +1,9 @@
-export const errorResponse = (statusCode, message) => {
-    return { statusCode, message };
+export const errorResponse = (status, message) => {
+    return { status, message };
 };
 
-export const successResponse = (statusCode, message, data) => {
-    const response = { statusCode, message };
+export const successResponse = (status, message, data) => {
+    const response = { status, message };
     if (data) {
         response["data"] = data;
     }

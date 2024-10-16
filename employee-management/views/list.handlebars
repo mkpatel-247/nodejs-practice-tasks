@@ -24,22 +24,20 @@
                         <th scope="row">{{@index}}</th>
                         <td>{{capitalize this.name}}</td>
                         <td>{{this.email}}</td>
-                        <td>{{this.joiningDate}}</td>
+                        <td>{{date this.joiningDate}}</td>
                         <td>{{capitalize this.gender}}</td>
                         <td>{{findName "department" this.department}}</td>
                         <td>{{findName "designation" this.designation}}</td>
-                        <td>
-                            {{#if this.salary}}
-                            {{this.salary}}
-                            {{else}}
-                            -
-                            {{/if}}
+                        <td id="update-salary">
+                            <span id="list-salary">
+                                {{#if this.salary}} {{this.salary}}
+                                {{else}} - {{/if}}
+                            </span>
                         </td>
 
                         <td>
-                            <button class="btn btn-sm btn-outline-primary" type="button" id="update-employee"
+                            <button class="btn btn-sm btn-outline-primary bi bi-pen" type="button" id="update-employee"
                                 value="{{this.id}}">
-                                <i class="bi bi-pen"></i>
                             </button>
                             <button class="btn btn-sm btn-outline-danger" type="button"
                                 onclick="removeEmployee('{{this.id}}')">

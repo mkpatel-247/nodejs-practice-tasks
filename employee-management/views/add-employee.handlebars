@@ -1,5 +1,6 @@
 <div class="container">
-    {{> page-heading heading="Add employee form"}}
+    {{> page-heading heading=pageTitle}}
+    {{#unless formField}}
     <form id="add-employee-form" class="row g-3">
         <div class="col-md-6">
             <label for="name" class="form-label">Name</label>
@@ -15,10 +16,13 @@
         </div>
         <div class="col-md-4">
             <label for="department" class="form-label">Department</label>
+
             <select id="emp-department" class="form-select" required>
                 <option value="" selected>Choose...</option>
                 {{#each department}}
-                <option value="{{this.id}}">{{this.name}}</option>
+                <option value="{{this.id}}">
+                    {{this.name}}
+                </option>
                 {{/each}}
             </select>
         </div>
@@ -61,17 +65,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7">
-            <div class="form-group row d-flex align-items-center">
-                <label for="salary" class="col-md-2 col-form-label">Salary</label>
-                <div class="col-md-5">
-                    <input type="number" name="emp-salary" class="form-control" id="emp-salary" required>
-                </div>
-            </div>
-        </div>
+
         <div class="col-12 d-flex gap-2">
             <button type="submit" class="btn btn-primary">Add Employee</button>
             <button type="reset" class="btn btn-outline-danger">Reset</button>
         </div>
     </form>
+    {{/unless}}
+
+    {{#if formField}}
+    <form id="salary-form">
+        <div class="col-md-7">
+            <div class="form-group row d-flex align-items-center">
+                <label for="salary" class="col-md-2 col-form-label">Salary</label>
+                <div class="col-md-5">
+                    <input type="hidden" name="emp-id" id="emp-id" value="{{formField.id}}">
+                    <input type="number" name="emp-salary" class="form-control" id="emp-salary"
+                        placeholder="Enter salary." value="{{formField.salary}}" required>
+                </div>
+            </div>
+        </div>
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Update Salary</button>
+            <a href="/" type="button" class="btn btn-outline-primary">Go back</a>
+        </div>
+    </form>
+    {{/if}}
 </div>

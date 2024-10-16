@@ -12,6 +12,8 @@ export const addEmployee = (req, res, next) => {
     try {
         const { name, email, joiningDate, department, designation, gender } =
             req.body;
+        const getEmployee = query.findAll(EMPLOYEE_DB_URL);
+
         const detail = {
             id: v4(),
             name,
@@ -20,9 +22,8 @@ export const addEmployee = (req, res, next) => {
             department,
             designation,
             gender,
-            salary: ""
+            salary: 0,
         };
-        const getEmployee = query.findAll(EMPLOYEE_DB_URL);
         getEmployee.push(detail);
         writeFile(EMPLOYEE_DB_URL, getEmployee); //write into file.
         return res.status(200).send(successResponse(200, SUCCESS.S03));
@@ -59,12 +60,36 @@ export const getEmployee = (req, res, next) => {
         const { id } = req.params;
         const { detail } = query.findOne(EMPLOYEE_DB_URL, id);
         if (detail?.id) {
-            return res.status(200).send(successResponse(200, SUCCESS.S05, detail));
+            return res
+                .status(200)
+                .send(successResponse(200, SUCCESS.S05, detail));
         }
         return res.status(400).send(successResponse(400, ERROR.E04, {}));
-
     } catch (error) {
         console.log("Error in getEmployee controllers :>> ", error.message);
         return res.status(500).send(errorResponse(500, ERROR.E01));
     }
-}
+};
+
+/**
+ * Update salary.
+ */
+export const updateSalary = (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { salary } = req.body;
+
+        const getEmployee = query.findAll(EMPLOYEE_DB_URL);
+        console.log("object :>> ", salary, id);
+        if (id) {
+            const { detail, index } = query.findOne(EMPLOYEE_DB_URL, id);
+            getEmployee[index] = { ...detail, salary: salary };
+            writeFile(EMPLOYEE_DB_URL, getEmployee);
+            return res.status(200).send(successResponse(200, "Salary update."));
+        }
+        return res.status(400).send(successResponse(400, ERROR.E04, {}));
+    } catch (error) {
+        console.log("Error in getEmployee controllers :>> ", error.message);
+        return res.status(500).send(errorResponse(500, ERROR.E01));
+    }
+};

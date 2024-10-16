@@ -19,14 +19,24 @@ $(function () {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name, email, joiningDate, department, designation, gender }),
+                body: JSON.stringify({
+                    name,
+                    email,
+                    joiningDate,
+                    department,
+                    designation,
+                    gender,
+                }),
             });
-            if (res.status === 200) {
+            const result = await res.json();
+            if (result.status === 200) {
                 window.location.replace("/"); // Redirect on successful to list page.
             } else {
+                alert(`Error: >> ${result.message}`);
                 console.error("Failed to submit form. Status:", res.status);
             }
         } catch (error) {
+            alert(`Error: >> ${error.message}`);
             console.error("Error while submitting form:", error.message);
         }
     });
@@ -44,32 +54,67 @@ $(function () {
         $("#emp-email").val(event.currentTarget.value.trim());
     });
 
+    /**
+     * Edit button
+     */
     $(document).on("click", "#update-employee", async function (event) {
         try {
-            const id = event?.target?.value;
-            log
-            const res = await fetch(`/api/get-employee/${id}/`, {
+            const id = event.currentTarget.value;
+
+            const res = await fetch(`/api/get-employee/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                 },
-            })
-            if (res.status == 200) {
-                const result = await res.json();
-                console.log("Result:>>>>>> ", result.data);
-
-                $("#emp-name").val(result.data.name);
-                $("#emp-email").val(result.data.email);
-                $("#emp-joining-date").val(result.data.joiningDate);
-                $("#emp-department").val(result.data.department);
-                $("#emp-designation").val(result.data.designation);
-                $("#emp-salary").val(result.data.salary);
-                window.location.replace(`/add-emp?id=${id}`)
+            });
+            const result = await res.json();
+            if (result.status == 200) {
+                window.location.replace(`/add-emp?id=${id}`);
             }
         } catch (error) {
-
+            alert("Error :>> ", error.message);
+            console.log("Error update-employee script :>> ", error.message);
         }
-    })
+    });
+
+    /**
+     * Trim the salary input field.
+     */
+    $(document).on("blur", "#emp-salary", function (event) {
+        $("#emp-salary").val(event.currentTarget.value.trim());
+        // const value = $("#emp-salary").val();
+        // $("#emp-salary").val(isNaN(value) ? 0 : value);
+    });
+
+    $(document).on("submit", "#salary-form", async function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const salary = $("#emp-salary").val();
+        const id = $("#emp-id").val();
+
+        // Make an API call to add employee.
+        try {
+            const res = await fetch(`/api/update-employee/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    salary,
+                }),
+            });
+            const result = await res.json();
+            if (result.status === 200) {
+                window.location.replace("/"); // Redirect on successful to list page.
+            } else {
+                alert(`Error: >> ${result.message}`);
+                console.error("Failed to submit form. Status:", res.status);
+            }
+        } catch (error) {
+            alert(`Error: >> ${error.message}`);
+            console.error("Error while submitting form:", error.message);
+        }
+    });
 });
 
 /**
@@ -89,6 +134,7 @@ async function removeEmployee(id) {
             window.location.replace("/");
             return;
         } else {
+            alert(`Error: >> ${error.message}`);
             console.error("Failed to delete item. Status:", res.status);
             return;
         }

@@ -1,6 +1,8 @@
-import { DEPARTMENT_DB_URL, DESIGNATION_DB_URL } from "../config/db-url.constant.js";
+import {
+    DEPARTMENT_DB_URL,
+    DESIGNATION_DB_URL,
+} from "../config/db-url.constant.js";
 import { query } from "../controllers/query.js";
-
 
 export const searchNameField = (dbName, id) => {
     let url = "";
@@ -15,4 +17,4 @@ export const searchNameField = (dbName, id) => {
     const { detail } = query.findOne(url, id);
 
     return detail?.name;
-}
+};
