@@ -79,10 +79,16 @@ $(function () {
 
     /**
      * Trim the salary input field.
+     * TODO: Validation.
      */
     $(document).on("blur", "#emp-salary", function (event) {
         $("#emp-salary").val(event.currentTarget.value.trim());
-        // const value = $("#emp-salary").val();
+        const value = $("#emp-salary").val();
+        if (value < 0 || value > 100000) {
+            console.log($("#emp-salary"));
+
+            $("#emp-salary").val(0);
+        }
         // $("#emp-salary").val(isNaN(value) ? 0 : value);
     });
 
@@ -115,6 +121,24 @@ $(function () {
             console.error("Error while submitting form:", error.message);
         }
     });
+
+    $(document).on(
+        "click",
+        "input[name='selected-user-tick']",
+        function (event) {
+            if ($("input[name='selected-user-tick']:checked").length) {
+                $("#credit-salary").prop("disabled", false);
+            } else {
+                $("#credit-salary").prop("disabled", true);
+            }
+        }
+    );
+
+    $(document).on("click", "#filter-button", async function (event) {
+        const month = $("#month-wise-filter").val();
+        const employee = $("#employee-wise-filter").val();
+        filterSalaryData(employee, month);
+    });
 });
 
 /**
@@ -134,12 +158,78 @@ async function removeEmployee(id) {
             window.location.replace("/");
             return;
         } else {
-            alert(`Error: >> ${error.message}`);
+            alert(`Error: >> ${res.message}`);
             console.error("Failed to delete item. Status:", res.status);
             return;
         }
     } catch (error) {
         console.error("Error while deleting item:", error.message);
         return;
+    }
+}
+
+async function creditSalary() {
+    const month = document.getElementById("selected-month");
+    if (month.value) {
+        try {
+            const checkboxes = document.querySelectorAll(
+                "input[name='selected-user-tick']:checked"
+            );
+
+            const getSelectedIds = Array.from(checkboxes).map(
+                (item) => item.value
+            );
+
+            const res = await fetch(`/api/send-salary/${month.value}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    ids: getSelectedIds,
+                }),
+            });
+            const result = await res.json();
+            if (result.status == 200 || result.status == 201) {
+                alert(`Message :>> ${result.message}`);
+                window.location.replace("/");
+            } else {
+                alert(`Error :>> ${result.message}`);
+                console.error("Error while sending salary :", result.message);
+            }
+        } catch (error) {
+            alert(`Error :>> ${error.message}`);
+            console.error("Error while sending salary :", error.message);
+            return;
+        }
+    }
+}
+
+async function filterSalaryData(id, month) {
+    const apiRoute = `/salary-history?empId=${id}&month=${month}`;
+    try {
+        const res = await fetch(apiRoute, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        // const result = await res.json();
+        if (res.status == 200) {
+            const htmlPage = $(res);
+            const table = htmlPage.find("#salary-history-table");
+            if (table.length > 0) {
+                console.log("-----------------------------------");
+                console.log("🚀 ~ filterSalaryData ~ table:", table.html());
+                $("#salary-history-table").html(table.html());
+                history.pushState(null, "", apiRoute);
+            }
+            // window.location.replace(
+            //     `/salary-history?empId=${id}&month=${month}`
+            // );
+        }
+    } catch (error) {
+        alert("Error :>> ", error.message);
+        console.log("Error filterSalaryData script :>> ", error.message);
     }
 }

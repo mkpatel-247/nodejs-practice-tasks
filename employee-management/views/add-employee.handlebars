@@ -81,7 +81,11 @@
                 <div class="col-md-5">
                     <input type="hidden" name="emp-id" id="emp-id" value="{{formField.id}}">
                     <input type="number" name="emp-salary" class="form-control" id="emp-salary"
-                        placeholder="Enter salary." value="{{formField.salary}}" required>
+                        pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency" placeholder="Enter salary."
+                        value="{{formField.salary}}" required>
+                    <span class="text-danger d-none validate-message">
+                        Invalid salary input.
+                    </span>
                 </div>
             </div>
         </div>

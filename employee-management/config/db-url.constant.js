@@ -7,3 +7,7 @@ export const DESIGNATION_DB_URL = path.join(
     DB_DIR_URL,
     "designation.data.json"
 );
+export const SALARY_HISTORY_DB_URL = path.join(
+    DB_DIR_URL,
+    "salary_history.json"
+);

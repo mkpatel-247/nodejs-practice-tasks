@@ -6,7 +6,7 @@ import pageRoutes from "./routes/pages.routes.js";
 import apiRoutes from "./routes/api.routes.js";
 import { searchNameField } from "./helpers/findName.helper.js";
 import helpers from "handlebars-helpers";
-import { formatDate } from "./helpers/formatDate.helper.js";
+import { formatDate, formatIndex } from "./helpers/format.helper.js";
 
 const PORT = 3000;
 const app = express();
@@ -21,6 +21,7 @@ app.engine(
             helpers: helpers(),
             findName: searchNameField,
             date: formatDate,
+            index: formatIndex,
         },
     })
 );
@@ -45,5 +46,5 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     console.log("Uncaught exception...");
 
-    res.render("error");
+    // res.render("error");
 });

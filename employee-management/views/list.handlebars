@@ -4,9 +4,20 @@
         <div class="col">
 
             {{#if employee}}
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-end mb-2 me-3">
+                        <button type="button" name="credit-salary-btn" id="credit-salary" class="btn btn-primary"
+                            data-bs-toggle="modal" data-bs-target="#modalId" disabled>
+                            Credit Salary
+                        </button>
+                    </div>
+                </div>
+            </div>
             <table class="table table-hover">
-                <thead>
+                <thead class="table-light">
                     <tr>
+                        <th></th>
                         <th scope="col">#Id</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
@@ -21,7 +32,11 @@
                 <tbody>
                     {{#each employee}}
                     <tr>
-                        <th scope="row">{{@index}}</th>
+                        <td>
+                            <input class="form-check-input" name="selected-user-tick" type="checkbox"
+                                value="{{this.id}}">
+                        </td>
+                        <th scope="row">{{index @index}}</th>
                         <td>{{capitalize this.name}}</td>
                         <td>{{this.email}}</td>
                         <td>{{date this.joiningDate}}</td>

@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    {{> page-heading heading="Salary History"}}
+    <div class="row py-3">
+        <div class="col">
+            {{#if salaryData}}
+            <div class="d-flex justify-content-end mb-2 me-3">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between gap-3">
+
+                            {{!-- <button type="button" name="credit-salary-btn" id="credit-salary"
+                                class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalId" disabled> --}}
+                                <div>
+                                    <select class="form-select" name="month-wise" id="month-wise-filter">
+                                        <option value="">All</option>
+                                        {{#each dateFilter}}
+                                        <option value="{{this}}">{{this}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                {{!--
+                            </button> --}}
+                            <div>
+                                <select class="form-select" name="month-wise" id="employee-wise-filter">
+                                    <option value="">All</option>
+                                    {{#each employee}}
+                                    <option value="{{this.id}}">{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+
+                            <div>
+                                <button type="button" class="btn btn-primary" id="filter-button">Apply Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover" id="salary-history-table">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Salary</th>
+                        <th scope="col">Month</th>
+                        <th scope="col">Created At.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each salaryData}}
+                    <tr>
+                        <th scope="row">{{index @index}}</th>
+                        <td>{{capitalize this.name}}</td>
+                        <td>{{this.salary}}</td>
+                        <td>{{this.date}}</td>
+                        <td>{{this.createdAt}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+                {{else}}
+                <h3 class="text-center">No Record Found</h3>
+                {{/if}}
+            </table>
+        </div>
+    </div>
+</div>

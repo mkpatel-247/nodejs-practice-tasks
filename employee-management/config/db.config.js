@@ -4,6 +4,7 @@ import {
     DEPARTMENT_DB_URL,
     DESIGNATION_DB_URL,
     EMPLOYEE_DB_URL,
+    SALARY_HISTORY_DB_URL,
 } from "./db-url.constant.js";
 
 const SAMPLE_DATA_DEPARTMENT = [
@@ -84,10 +85,24 @@ const checkDesignationData = () => {
         );
     }
 };
+/**
+ * {
+        "09/2024": [],
+        "10/2024": [],
+        "11/2024": [],
+        "12/2024": [],
+    }
+ */
+const checkSalaryHistoryData = () => {
+    if (!fs.existsSync(SALARY_HISTORY_DB_URL)) {
+        fs.writeFileSync(SALARY_HISTORY_DB_URL, JSON.stringify([]));
+    }
+};
 
 export const isDbExists = () => {
     checkDir();
     checkEmployeeData();
     checkDepartmentData();
     checkDesignationData();
+    checkSalaryHistoryData();
 };
