@@ -17,6 +17,7 @@ const router = express.Router();
 router.get("/get-employee/:id", getEmployee);
 
 router.post("/add-employee", employeeFormFieldCheck, checkEmail, addEmployee);
+
 router.post("/update-employee/:id", updateSalary);
 
 router.delete("/delete-employee/:id", deleteEmployee);

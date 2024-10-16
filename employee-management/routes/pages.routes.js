@@ -8,20 +8,24 @@ import {
 } from "../config/db-url.constant.js";
 import moment from "moment";
 import {
-    employeeWise,
-    monthWise,
-    filterEmployeeAndMonth,
+    filterData,
 } from "../utils/filter-salary-list.js";
-import { dateFilter } from "../config/config.js";
+import { currentYear, dateFilter } from "../config/config.js";
 
 const router = express.Router();
 
+/**
+ * Home page route.
+ */
 router.get("/", (req, res, next) => {
     const getEmployee = query.findAll(EMPLOYEE_DB_URL);
 
-    res.render("list", { employee: getEmployee });
+    res.render("list", { employee: getEmployee, dateFilter, currentYear });
 });
 
+/**
+ * Add employee and update salary route.
+ */
 router.get("/add-emp", (req, res, next) => {
     const { id } = req.query;
     const { detail, index } = query.findOne(EMPLOYEE_DB_URL, id);
@@ -54,48 +58,39 @@ router.get("/salary-history", (req, res, next) => {
     const { empId, month } = req.query;
     console.log("🚀 ~ router.get ~ empId, month:", empId, month);
 
-    const data = query.findAll(SALARY_HISTORY_DB_URL);
-    const employee = query.findAll(EMPLOYEE_DB_URL);
+    try {
+        // Fetch salary history and employee data
+        const [data, employees] = [
+            query.findAll(SALARY_HISTORY_DB_URL),
+            query.findAll(EMPLOYEE_DB_URL)
+        ];
 
-    let newData = [];
-    if (empId) {
-        newData = employeeWise(data, empId).map((record) => {
-            return {
-                ...record,
-                createdAt: moment(record.createdAt).format("LLL"),
-                name: query.findOne(EMPLOYEE_DB_URL, record.id)?.detail?.name,
-            };
+        // Function to format the salary records
+        const formatRecord = (record) => ({
+            ...record,
+            createdAt: moment(record.createdAt).format("LLL"),
+            name: query.findOne(EMPLOYEE_DB_URL, record.id)?.detail?.name,
         });
-    } else if (month) {
-        newData = monthWise(data, month).map((record) => {
-            return {
-                ...record,
-                createdAt: moment(record.createdAt).format("LLL"),
-                name: query.findOne(EMPLOYEE_DB_URL, record.id)?.detail?.name,
-            };
+
+        // Filter data based on empId and month
+        const filteredData = filterData(data, empId, month);
+
+        // Format the filtered data
+        const formattedData = filteredData.map(formatRecord);
+
+        // Render the response
+        res.status(200).render("salary-list", {
+            salaryData: formattedData,
+            employee: employees,
+            filterApplied: { empId, month },
+            dateFilter,
+            currentYear
         });
-    } else if (month && empId) {
-        newData = filterEmployeeAndMonth(data, empId, month).map((record) => {
-            return {
-                ...record,
-                createdAt: moment(record.createdAt).format("LLL"),
-                name: query.findOne(EMPLOYEE_DB_URL, record.id)?.detail?.name,
-            };
-        });
-    } else {
-        newData = data.map((record) => {
-            return {
-                ...record,
-                createdAt: moment(record.createdAt).format("LLL"),
-                name: query.findOne(EMPLOYEE_DB_URL, record.id)?.detail?.name,
-            };
-        });
+    } catch (error) {
+        console.error("Error in /salary-history route:", error.message);
+        next(error);
     }
-    res.status(200).render("salary-list", {
-        salaryData: newData,
-        employee,
-        dateFilter,
-    });
 });
+
 
 export default router;

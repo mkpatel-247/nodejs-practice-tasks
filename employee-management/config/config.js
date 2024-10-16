@@ -1,1 +1,2 @@
-export const dateFilter = ["09/2024", "10/2024", "11/2024", "12/2024"];
+export const currentYear = 2024;
+export const dateFilter = ["09", "10", "11", "12"];

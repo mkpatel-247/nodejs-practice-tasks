@@ -3,6 +3,9 @@ import { query } from "../controllers/query.js";
 import { ERROR } from "../messages/error.message.js";
 import { errorResponse } from "../utils/api-response.js";
 
+/**
+ * Check the employee salary exist or not. In employee table.
+ */
 export const isSalaryExist = (req, res, next) => {
     try {
         const { ids } = req.body;
@@ -11,7 +14,7 @@ export const isSalaryExist = (req, res, next) => {
         const data = employeeData.filter((record) => {
             return ids.includes(record.id) && !record.salary;
         });
-        console.log("🚀 ~ isSalaryExist ~ data:", data);
+
         if (!data.length) {
             return next();
         } else {

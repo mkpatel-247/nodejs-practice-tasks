@@ -17,7 +17,8 @@
             <table class="table table-hover">
                 <thead class="table-light">
                     <tr>
-                        <th></th>
+                        <th><input class="form-check-input" name="select-all-employee" id="select-all-employee"
+                                type="checkbox"></th>
                         <th scope="col">#Id</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
@@ -64,11 +65,9 @@
                     {{/each}}
                 </tbody>
                 {{else}}
-                {{!--
-                <hr> --}}
+
                 <h3 class="text-center">No Record Found</h3>
-                {{!--
-                <hr> --}}
+
                 {{/if}}
             </table>
         </div>

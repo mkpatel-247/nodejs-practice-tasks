@@ -1,0 +1,40 @@
+<!-- Modal -->
+<div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"
+    id="select-month-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">
+                    Pick a Month for Salary
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-6">
+                            Select month :
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-select" aria-label="Default select example" name="select-month"
+                                id="selected-month" required>
+                                <option value="" selected>Choose...</option>
+                                {{#if dateFilter}}
+                                {{#each dateFilter}}
+                                <option value="{{this}}">{{this}}/{{../currentYear}}</option>
+                                {{/each}}
+                                {{/if}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" onclick="creditSalary()">Send</button>
+            </div>
+        </div>
+    </div>
+</div>

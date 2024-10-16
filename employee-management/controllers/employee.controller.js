@@ -113,11 +113,7 @@ export const sendSalary = (req, res, next) => {
 
             const getEmployee = query.findAll(EMPLOYEE_DB_URL);
 
-            const validRecords = removeDuplicate(
-                getSalaryHistory,
-                `${month}/${currentYear}`,
-                ids
-            );
+            const validRecords = removeDuplicate(getSalaryHistory, month, ids);
 
             if (validRecords.length) {
                 const idSet = new Set(validRecords);
@@ -131,7 +127,7 @@ export const sendSalary = (req, res, next) => {
                 data.forEach((element) => {
                     getSalaryHistory.push({
                         ...element,
-                        date: `${month}/${currentYear}`,
+                        month,
                         createdAt: Date.now(),
                     });
                 });

@@ -9,9 +9,6 @@ $(function () {
         const designation = $("#emp-designation").val();
         const gender = $("input[name='emp-gender']:checked").val();
 
-        // // Create a data object
-        // const formData = { name, email, joiningDate, department, designation, gender };
-
         // Make an API call to add employee.
         try {
             const res = await fetch(`/api/add-employee/`, {
@@ -98,7 +95,7 @@ $(function () {
         const salary = $("#emp-salary").val();
         const id = $("#emp-id").val();
 
-        // Make an API call to add employee.
+        // Make an API call to update employee.
         try {
             const res = await fetch(`/api/update-employee/${id}`, {
                 method: "POST",
@@ -122,6 +119,9 @@ $(function () {
         }
     });
 
+    /**
+     * Make credit salary disable/enable.
+     */
     $(document).on(
         "click",
         "input[name='selected-user-tick']",
@@ -130,6 +130,29 @@ $(function () {
                 $("#credit-salary").prop("disabled", false);
             } else {
                 $("#credit-salary").prop("disabled", true);
+            }
+        }
+    );
+
+    $(document).on(
+        "click",
+        "input[name='selected-user-tick']",
+        function (event) {
+            if ($("input[name='selected-user-tick']").length == $("input[name='selected-user-tick']:checked").length) {
+                $("#select-all-employee").prop("checked", "checked");
+            } else {
+                $("#select-all-employee").prop("checked", false);
+            }
+        }
+    );
+    $(document).on(
+        "click",
+        "input[name='select-all-employee']",
+        function (event) {
+            if ($("input[name='select-all-employee']").prop("checked")) {
+                $("input[name='selected-user-tick']").prop("checked", "checked");
+            } else {
+                $("input[name='selected-user-tick']").prop("checked", false);
             }
         }
     );
@@ -216,20 +239,19 @@ async function filterSalaryData(id, month) {
         });
         // const result = await res.json();
         if (res.status == 200) {
-            const htmlPage = $(res);
-            const table = htmlPage.find("#salary-history-table");
-            if (table.length > 0) {
-                console.log("-----------------------------------");
-                console.log("🚀 ~ filterSalaryData ~ table:", table.html());
-                $("#salary-history-table").html(table.html());
-                history.pushState(null, "", apiRoute);
-            }
-            // window.location.replace(
-            //     `/salary-history?empId=${id}&month=${month}`
-            // );
+            // const htmlPage = $(res);
+            // const table = htmlPage.find("#salary-history-table").html();
+            // // if (table.length > 0) {
+            // //     console.log("-----------------------------------");
+            // //     console.log("🚀 ~ filterSalaryData ~ table:", table.html());
+            // $("#salary-history-table").html(table);
+            // history.pushState(null, "", apiRoute);
+            // // }
+            window.location.replace(apiRoute);
         }
     } catch (error) {
         alert("Error :>> ", error.message);
         console.log("Error filterSalaryData script :>> ", error.message);
+        window.location.replace(apiRoute);
     }
 }

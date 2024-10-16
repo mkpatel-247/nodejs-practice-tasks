@@ -1,10 +1,7 @@
-export const employeeWise = (data, empId) => {
-    return data.filter((record) => record.id == empId);
-};
-export const monthWise = (data, month) => {
-    return data.filter((record) => record.date == month);
-};
-
-export const filterEmployeeAndMonth = (data, empId, month) => {
-    return data.filter((record) => record.date == month && record.id == empId);
+export const filterData = (data, empId = null, month = null) => {
+    return data.filter((record) => {
+        const matchesEmpId = empId ? record.id == empId : true; // Check if empId is provided
+        const matchesMonth = month ? record.month == month : true; // Check if month is provided
+        return matchesEmpId && matchesMonth; // Return true if both conditions are met
+    });
 };
