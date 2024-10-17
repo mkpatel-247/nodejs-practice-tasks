@@ -84,7 +84,7 @@ export const updateSalary = (req, res, next) => {
         const { salary } = req.body;
 
         const getEmployee = query.findAll(EMPLOYEE_DB_URL);
-        console.log("object :>> ", salary, id);
+
         if (id) {
             const { detail, index } = query.findOne(EMPLOYEE_DB_URL, id);
             getEmployee[index] = { ...detail, salary: salary };
@@ -109,7 +109,6 @@ export const sendSalary = (req, res, next) => {
 
         if (allowedMonth.includes(month)) {
             const getSalaryHistory = query.findAll(SALARY_HISTORY_DB_URL);
-            const currentYear = 2024;
 
             const getEmployee = query.findAll(EMPLOYEE_DB_URL);
 

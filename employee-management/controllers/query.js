@@ -1,4 +1,8 @@
 import fs from "fs";
+
+/**
+ * Query function to read data from file.
+ */
 export const query = {
     findAll: function (db_url) {
         try {
@@ -23,19 +27,6 @@ export const query = {
             return {};
         }
     },
-};
-
-/**
- * Read file and return data in json format.
- */
-export const readFile = (db_url) => {
-    try {
-        const bufferData = fs.readFileSync(db_url);
-        return JSON.parse(bufferData);
-    } catch (error) {
-        console.log(`Error while reading ${db_url}`);
-        return;
-    }
 };
 
 /**

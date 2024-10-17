@@ -6,10 +6,7 @@ import {
     EMPLOYEE_DB_URL,
     SALARY_HISTORY_DB_URL,
 } from "../config/db-url.constant.js";
-import moment from "moment";
-import {
-    filterData,
-} from "../utils/filter-salary-list.js";
+import { filterData, formatRecord } from "../utils/filter-salary-list.js";
 import { currentYear, dateFilter } from "../config/config.js";
 
 const router = express.Router();
@@ -28,8 +25,7 @@ router.get("/", (req, res, next) => {
  */
 router.get("/add-emp", (req, res, next) => {
     const { id } = req.query;
-    const { detail, index } = query.findOne(EMPLOYEE_DB_URL, id);
-    console.log("detail :>> ", detail);
+    const { detail } = query.findOne(EMPLOYEE_DB_URL, id);
 
     const designation = query.findAll(DESIGNATION_DB_URL);
     const department = query.findAll(DEPARTMENT_DB_URL);
@@ -56,41 +52,29 @@ router.get("/add-emp", (req, res, next) => {
  */
 router.get("/salary-history", (req, res, next) => {
     const { empId, month } = req.query;
-    console.log("🚀 ~ router.get ~ empId, month:", empId, month);
 
     try {
         // Fetch salary history and employee data
         const [data, employees] = [
             query.findAll(SALARY_HISTORY_DB_URL),
-            query.findAll(EMPLOYEE_DB_URL)
+            query.findAll(EMPLOYEE_DB_URL),
         ];
 
-        // Function to format the salary records
-        const formatRecord = (record) => ({
-            ...record,
-            createdAt: moment(record.createdAt).format("LLL"),
-            name: query.findOne(EMPLOYEE_DB_URL, record.id)?.detail?.name,
-        });
-
-        // Filter data based on empId and month
         const filteredData = filterData(data, empId, month);
 
-        // Format the filtered data
-        const formattedData = filteredData.map(formatRecord);
+        const formattedData = filteredData.map(formatRecord); // Format the filtered data
 
-        // Render the response
         res.status(200).render("salary-list", {
             salaryData: formattedData,
             employee: employees,
             filterApplied: { empId, month },
             dateFilter,
-            currentYear
+            currentYear,
         });
     } catch (error) {
         console.error("Error in /salary-history route:", error.message);
         next(error);
     }
 });
-
 
 export default router;

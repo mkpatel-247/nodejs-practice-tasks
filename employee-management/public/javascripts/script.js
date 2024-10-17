@@ -1,6 +1,6 @@
 $(function () {
     $(document).on("submit", "#add-employee-form", async function (event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
 
         const name = $("#emp-name").val();
         const email = $("#emp-email").val();
@@ -27,7 +27,7 @@ $(function () {
             });
             const result = await res.json();
             if (result.status === 200) {
-                window.location.replace("/"); // Redirect on successful to list page.
+                window.location.replace("/");
             } else {
                 alert(`Error: >> ${result.message}`);
                 console.error("Failed to submit form. Status:", res.status);
@@ -42,12 +42,14 @@ $(function () {
      * Trim the name input field.
      */
     $(document).on("blur", "#emp-name", function (event) {
+        event.preventDefault();
         $("#emp-name").val(event.currentTarget.value.trim());
     });
     /**
      * Trim the email input field.
      */
     $(document).on("blur", "#emp-email", function (event) {
+        event.preventDefault();
         $("#emp-email").val(event.currentTarget.value.trim());
     });
 
@@ -55,6 +57,8 @@ $(function () {
      * Edit button
      */
     $(document).on("click", "#update-employee", async function (event) {
+        event.preventDefault();
+
         try {
             const id = event.currentTarget.value;
 
@@ -76,21 +80,21 @@ $(function () {
 
     /**
      * Trim the salary input field.
-     * TODO: Validation.
      */
     $(document).on("blur", "#emp-salary", function (event) {
-        $("#emp-salary").val(event.currentTarget.value.trim());
-        const value = $("#emp-salary").val();
-        if (value < 0 || value > 100000) {
-            console.log($("#emp-salary"));
+        event.preventDefault();
+        const value = parseFloat(event.currentTarget.value.trim());
 
-            $("#emp-salary").val(0);
+        if (value > 1000 && value < 100000) {
+            $("#emp-salary").val(value);
+        } else {
+            alert("Please enter a valid salary between 1000 and 100000.");
+            $("#emp-salary").val("");
         }
-        // $("#emp-salary").val(isNaN(value) ? 0 : value);
     });
 
     $(document).on("submit", "#salary-form", async function (event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
 
         const salary = $("#emp-salary").val();
         const id = $("#emp-id").val();
@@ -138,7 +142,10 @@ $(function () {
         "click",
         "input[name='selected-user-tick']",
         function (event) {
-            if ($("input[name='selected-user-tick']").length == $("input[name='selected-user-tick']:checked").length) {
+            if (
+                $("input[name='selected-user-tick']").length ==
+                $("input[name='selected-user-tick']:checked").length
+            ) {
                 $("#select-all-employee").prop("checked", "checked");
             } else {
                 $("#select-all-employee").prop("checked", false);
@@ -150,9 +157,14 @@ $(function () {
         "input[name='select-all-employee']",
         function (event) {
             if ($("input[name='select-all-employee']").prop("checked")) {
-                $("input[name='selected-user-tick']").prop("checked", "checked");
+                $("input[name='selected-user-tick']").prop(
+                    "checked",
+                    "checked"
+                );
+                $("#credit-salary").prop("disabled", false);
             } else {
                 $("input[name='selected-user-tick']").prop("checked", false);
+                $("#credit-salary").prop("disabled", "disabled");
             }
         }
     );
@@ -179,18 +191,21 @@ async function removeEmployee(id) {
         if (res.status == 200) {
             await res.json();
             window.location.replace("/");
-            return;
         } else {
             alert(`Error: >> ${res.message}`);
             console.error("Failed to delete item. Status:", res.status);
-            return;
+            window.location.replace("/");
         }
     } catch (error) {
+        alert(`Error: >> ${error.message}`);
         console.error("Error while deleting item:", error.message);
-        return;
+        window.location.replace("/");
     }
 }
 
+/**
+ * Calling credit salary.
+ */
 async function creditSalary() {
     const month = document.getElementById("selected-month");
     if (month.value) {
@@ -228,6 +243,9 @@ async function creditSalary() {
     }
 }
 
+/**
+ * Call salary history page api.
+ */
 async function filterSalaryData(id, month) {
     const apiRoute = `/salary-history?empId=${id}&month=${month}`;
     try {
@@ -237,16 +255,7 @@ async function filterSalaryData(id, month) {
                 "Content-Type": "application/json",
             },
         });
-        // const result = await res.json();
         if (res.status == 200) {
-            // const htmlPage = $(res);
-            // const table = htmlPage.find("#salary-history-table").html();
-            // // if (table.length > 0) {
-            // //     console.log("-----------------------------------");
-            // //     console.log("🚀 ~ filterSalaryData ~ table:", table.html());
-            // $("#salary-history-table").html(table);
-            // history.pushState(null, "", apiRoute);
-            // // }
             window.location.replace(apiRoute);
         }
     } catch (error) {
