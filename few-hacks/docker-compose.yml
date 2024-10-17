@@ -1,0 +1,14 @@
+version: '2'
+services:
+    mongodb:
+        image: 'mongo:6.0-jammy'
+        container_name: mongodb6
+        ports:
+            - '27099:27017'
+        restart: always
+        volumes:
+            - './data:/data/db'
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: admin
+            MONGO_INITDB_DATABASE: admin
