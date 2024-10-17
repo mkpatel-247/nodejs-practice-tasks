@@ -8,13 +8,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Employee List</a>
+                    <a class="nav-link {{#compare currentRoute "==" '/'}}active {{/compare}}" aria-current="page"
+                        href="/">Employee List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/add-emp">Add Employee</a>
+                    <a class="nav-link {{#compare currentRoute "==" '/add-emp'}}active {{/compare}}" href="/add-emp">Add
+                        Employee</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/salary-history">Salary History</a>
+                    <a class="nav-link {{#compare currentRoute "==" '/salary-history'}}active {{/compare}}"
+                        href="/salary-history">Salary History</a>
                 </li>
             </ul>
         </div>

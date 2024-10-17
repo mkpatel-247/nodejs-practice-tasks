@@ -17,7 +17,12 @@ const router = express.Router();
 router.get("/", (req, res, next) => {
     const getEmployee = query.findAll(EMPLOYEE_DB_URL);
 
-    res.render("list", { employee: getEmployee, dateFilter, currentYear });
+    res.render("list", {
+        employee: getEmployee,
+        dateFilter,
+        currentYear,
+        currentRoute: "/",
+    });
 });
 
 /**
@@ -36,6 +41,7 @@ router.get("/add-emp", (req, res, next) => {
             designation,
             department,
             formField: detail,
+            currentRoute: "/add-emp",
         });
     } else {
         res.render("add-employee", {
@@ -43,6 +49,7 @@ router.get("/add-emp", (req, res, next) => {
             designation,
             department,
             formField: detail,
+            currentRoute: "/add-emp",
         });
     }
 });
@@ -70,6 +77,7 @@ router.get("/salary-history", (req, res, next) => {
             filterApplied: { empId, month },
             dateFilter,
             currentYear,
+            currentRoute: "/salary-history",
         });
     } catch (error) {
         console.error("Error in /salary-history route:", error.message);
