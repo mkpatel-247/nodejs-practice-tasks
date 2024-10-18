@@ -85,14 +85,7 @@ const checkDesignationData = () => {
         );
     }
 };
-/**
- * {
-        "09/2024": [],
-        "10/2024": [],
-        "11/2024": [],
-        "12/2024": [],
-    }
- */
+
 const checkSalaryHistoryData = () => {
     if (!fs.existsSync(SALARY_HISTORY_DB_URL)) {
         fs.writeFileSync(SALARY_HISTORY_DB_URL, JSON.stringify([]));
