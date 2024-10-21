@@ -35,15 +35,15 @@
                     <tr>
                         <td>
                             <input class="form-check-input" name="selected-user-tick" type="checkbox"
-                                value="{{this.id}}">
+                                value="{{this._id}}">
                         </td>
                         <th scope="row">{{index @index}}</th>
                         <td>{{capitalize this.name}}</td>
                         <td>{{this.email}}</td>
                         <td>{{date this.joiningDate}}</td>
                         <td>{{capitalize this.gender}}</td>
-                        <td>{{findName "department" this.department}}</td>
-                        <td>{{findName "designation" this.designation}}</td>
+                        <td>{{this.department}}</td>
+                        <td>{{this.designation}}</td>
                         <td id="update-salary">
                             <span id="list-salary">
                                 {{#if this.salary}} {{this.salary}}
@@ -53,10 +53,10 @@
 
                         <td>
                             <button class="btn btn-sm btn-outline-primary bi bi-pen" type="button" id="update-employee"
-                                value="{{this.id}}">
+                                value="{{this._id}}">
                             </button>
                             <button class="btn btn-sm btn-outline-danger" type="button"
-                                onclick="removeEmployee('{{this.id}}')">
+                                onclick="removeEmployee('{{this._id}}')">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </td>

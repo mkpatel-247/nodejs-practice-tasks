@@ -1,24 +1,26 @@
 import express from "express";
-import { query } from "../controllers/query.js";
+import { aggregateListEmployee, query } from "../controllers/query.js";
 import {
-    DEPARTMENT_DB_URL,
-    DESIGNATION_DB_URL,
     EMPLOYEE_DB_URL,
     SALARY_HISTORY_DB_URL,
 } from "../config/db-url.constant.js";
 import { filterData, formatRecord } from "../utils/filter-salary-list.js";
 import { currentYear, dateFilter } from "../config/config.js";
+import employeeModel from "../models/employee.model.js";
+import designationModel from "../models/designation.model.js";
+import departmentModel from "../models/department.model.js";
 
 const router = express.Router();
 
 /**
  * Home page route.
  */
-router.get("/", (req, res, next) => {
-    const getEmployee = query.findAll(EMPLOYEE_DB_URL);
-
+router.get("/", async (req, res, next) => {
+    const getEmployee = await employeeModel.find({}).lean();
+    console.log("🚀 ~ router.get ~ getEmployee:", getEmployee);
+    const employee = await aggregateListEmployee();
     res.render("list", {
-        employee: getEmployee,
+        employee: employee,
         dateFilter,
         currentYear,
         currentRoute: "/",
@@ -28,19 +30,20 @@ router.get("/", (req, res, next) => {
 /**
  * Add employee and update salary route.
  */
-router.get("/add-emp", (req, res, next) => {
+router.get("/add-emp", async (req, res, next) => {
     const { id } = req.query;
-    const { detail } = query.findOne(EMPLOYEE_DB_URL, id);
+    const detail = await employeeModel.findById(id);
+    console.log("🚀 ~ router.get ~ detail:", detail);
 
-    const designation = query.findAll(DESIGNATION_DB_URL);
-    const department = query.findAll(DEPARTMENT_DB_URL);
+    const designation = await designationModel.find().lean();
+    const department = await departmentModel.find().lean();
 
-    if (detail?.id) {
+    if (detail?._id) {
         res.render("add-employee", {
             pageTitle: "Edit Employee",
             designation,
             department,
-            formField: detail,
+            formField: {},
             currentRoute: "/add-emp",
         });
     } else {

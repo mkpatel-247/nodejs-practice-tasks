@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import fs from "fs";
 import {
     DB_DIR_URL,
@@ -6,53 +7,44 @@ import {
     EMPLOYEE_DB_URL,
     SALARY_HISTORY_DB_URL,
 } from "./db-url.constant.js";
+import designationModel from "../models/designation.model.js";
+import departmentModel from "../models/department.model.js";
 
 const SAMPLE_DATA_DEPARTMENT = [
     {
-        departmentId: 101,
-        departmentName: "Engineering",
+        name: "Engineering",
     },
     {
-        departmentId: 102,
-        departmentName: "Product",
+        name: "Product",
     },
     {
-        departmentId: 103,
-        departmentName: "Human Resources",
+        name: "Human Resources",
     },
     {
-        departmentId: 104,
-        departmentName: "Marketing",
+        name: "Marketing",
     },
     {
-        departmentId: 105,
-        departmentName: "Sales",
+        name: "Sales",
     },
 ];
 const SAMPLE_DATA_DESIGNATION = [
     {
-        designationId: 1,
-        designationName: "Software Engineer",
+        name: "Software Engineer",
     },
     {
-        designationId: 2,
-        designationName: "Product Manager",
+        name: "Product Manager",
     },
     {
-        designationId: 3,
-        designationName: "QA Engineer",
+        name: "QA Engineer",
     },
     {
-        designationId: 4,
-        designationName: "HR Specialist",
+        name: "HR Specialist",
     },
     {
-        designationId: 5,
-        designationName: "UX Designer",
+        name: "UX Designer",
     },
     {
-        designationId: 6,
-        designationName: "BA - Business Analyst",
+        name: "BA - Business Analyst",
     },
 ];
 
@@ -98,4 +90,37 @@ export const isDbExists = () => {
     checkDepartmentData();
     checkDesignationData();
     checkSalaryHistoryData();
+};
+
+export const connectDB = () => {
+    return mongoose
+        .connect("mongodb://admin:admin@localhost:27099/admin")
+        .then(() => {
+            console.log("Database connected successfully...!");
+            departmentModel
+                .create(SAMPLE_DATA_DEPARTMENT)
+                .then(() => {
+                    console.log("Departments created and data inserted.");
+                })
+                .catch(() => {
+                    console.log("Departments data already present.");
+                })
+                .finally(() => {
+                    console.log("-----------------------------------");
+                });
+            designationModel
+                .create(SAMPLE_DATA_DESIGNATION)
+                .then(() => {
+                    console.log("Designations created and data inserted.");
+                })
+                .catch(() => {
+                    console.log("Designations data already present.");
+                })
+                .finally(() => {
+                    console.log("-----------------------------------");
+                });
+        })
+        .catch((err) => {
+            console.log("Error :>> ", err.message);
+        });
 };

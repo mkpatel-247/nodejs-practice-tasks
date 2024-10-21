@@ -1,7 +1,7 @@
 import express from "express";
 import { engine } from "express-handlebars";
 import path from "path";
-import { isDbExists } from "./config/db.config.js";
+import { connectDB } from "./config/db.config.js";
 import pageRoutes from "./routes/pages.routes.js";
 import apiRoutes from "./routes/api.routes.js";
 import { searchNameField } from "./helpers/findName.helper.js";
@@ -27,7 +27,8 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 app.set("views", path.join("./views"));
-isDbExists();
+// isDbExists();
+await connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -40,6 +41,7 @@ app.listen(process.env.PORT || PORT, () => {
     console.log(
         `Server is running on port ${PORT} \nPress ctrl + click on http://localhost:${PORT}/`
     );
+    console.log("-----------------------------------");
 });
 
 app.use(function (err, req, res, next) {

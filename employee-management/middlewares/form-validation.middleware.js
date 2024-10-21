@@ -37,18 +37,18 @@ export const employeeFormFieldCheck = (req, res, next) => {
     }
 };
 
-export const isDuplicate = (req, res, next) => {
-    const { name, email, joiningDate, department, designation, gender } =
-        req.body;
-    try {
-        const data = query.findAll(EMPLOYEE_DB_URL);
-        const index = data.findIndex((records) => records?.email == email);
-        if (index == -1) {
-            next();
-        } else {
-            return res.status(403).send(errorResponse(403, ERROR.E08));
-        }
-    } catch (error) {
-        return res.status(500).send(errorResponse(500, ERROR.E01));
-    }
-};
+// export const isDuplicate = (req, res, next) => {
+//     const { name, email, joiningDate, department, designation, gender } =
+//         req.body;
+//     try {
+//         const data = query.findAll(EMPLOYEE_DB_URL);
+//         const index = data.findIndex((records) => records?.email == email);
+//         if (index == -1) {
+//             next();
+//         } else {
+//             return res.status(403).send(errorResponse(403, ERROR.E08));
+//         }
+//     } catch (error) {
+//         return res.status(500).send(errorResponse(500, ERROR.E01));
+//     }
+// };

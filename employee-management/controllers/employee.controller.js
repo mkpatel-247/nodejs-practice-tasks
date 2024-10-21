@@ -8,29 +8,37 @@ import {
 import { SUCCESS } from "../messages/success.messages.js";
 import { v4 } from "uuid";
 import { removeDuplicate } from "../utils/check-salary.js";
+import Employee from "../models/employee.model.js";
+import employeeModel from "../models/employee.model.js";
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
 
 /**
  * Add employee into database.
  */
-export const addEmployee = (req, res, next) => {
+export const addEmployee = async (req, res, next) => {
     try {
         const { name, email, joiningDate, department, designation, gender } =
             req.body;
-        const getEmployee = query.findAll(EMPLOYEE_DB_URL);
 
         const detail = {
-            id: v4(),
             name,
             email,
             joiningDate,
-            department,
-            designation,
+            department: new ObjectId(department),
+            designation: new ObjectId(designation),
             gender,
             salary: 0,
         };
-        getEmployee.push(detail);
-        writeFile(EMPLOYEE_DB_URL, getEmployee); //write into file.
-        return res.status(200).send(successResponse(200, SUCCESS.S03));
+        await employeeModel
+            .create(detail)
+            .then(() => {
+                return res.status(200).send(successResponse(200, SUCCESS.S03));
+            })
+            .catch((err) => {
+                console.log("Error :>> ", err.message);
+                return res.status(400).send(errorResponse(400, ERROR.E04));
+            });
     } catch (error) {
         console.log("Error while adding controllers:>> ", error.message);
         return res.status(400).send(errorResponse(400, ERROR.E04));
@@ -59,10 +67,10 @@ export const deleteEmployee = (req, res, next) => {
 /**
  * Returns employee details is present.
  */
-export const getEmployee = (req, res, next) => {
+export const getEmployee = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { detail } = query.findOne(EMPLOYEE_DB_URL, id);
+        const { detail } = await Employee.findById(id); // query.findOne(EMPLOYEE_DB_URL, id);
         if (detail?.id) {
             return res
                 .status(200)
