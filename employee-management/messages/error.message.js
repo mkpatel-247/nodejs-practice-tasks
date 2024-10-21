@@ -6,4 +6,5 @@ export const ERROR = {
     E05: "Please enter a valid data.",
     E06: "Transaction Failed.",
     E07: "Please add salary.",
+    E08: "Duplicate record found.",
 };
