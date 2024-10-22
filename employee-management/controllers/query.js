@@ -48,51 +48,52 @@ export const aggregateListEmployee = async () => {
         const data = await employeeModel.aggregate([
             {
                 $lookup: {
-                    from: "departments", // The collection to join
-                    localField: "department", // The field from the employee collection
-                    foreignField: "_id", // The field from the departments collection
-                    as: "department_info", // The name for the output array
+                    from: "departments",
+                    localField: "department",
+                    foreignField: "_id",
+                    as: "department_info",
                 },
             },
             {
                 $unwind: {
-                    // Unwind the department_info array
                     path: "$department_info",
-                    preserveNullAndEmptyArrays: true, // Optional: If you want to keep employees without a department
+                    preserveNullAndEmptyArrays: true, // Optionally include employees without departments
                 },
             },
             {
                 $lookup: {
-                    from: "designations", // The collection to join
-                    localField: "designation", // The field from the employee collection
-                    foreignField: "_id", // The field from the departments collection
-                    as: "designation_info", // The name for the output array
+                    from: "designations",
+                    localField: "designation",
+                    foreignField: "_id",
+                    as: "designation_info",
                 },
             },
             {
                 $unwind: {
-                    // Unwind the department_info array
                     path: "$designation_info",
                     preserveNullAndEmptyArrays: true,
                 },
             },
             {
                 $project: {
-                    _id: 1, // Include _id
-                    name: 1, // Include name
-                    joiningDate: 1, // Include joiningDate
-                    gender: 1, // Include gender
-                    salary: 1, // Include salary
+                    _id: 1,
+                    name: 1,
+                    joiningDate: 1,
+                    gender: 1,
+                    salary: 1,
                     email: 1,
-                    department: "$department_info.name", // Extract the name from department_info
-                    designation: "$designation_info.name", // Extract the name from department_info
+                    department: {
+                        $cond: {
+                            if: "$department_info.name",
+                            then: "$department_info.name",
+                            else: "-",
+                        },
+                    },
+                    designation: "$designation_info.name",
                 },
             },
         ]);
-
-        console.log("-----------------------------------", data);
-        return data; // Return the aggregated result directly
-        // return query;
+        return data;
     } catch (error) {
         console.log("Error :>> ", error.message);
         return [];

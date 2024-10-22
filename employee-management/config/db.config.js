@@ -41,10 +41,13 @@ const SAMPLE_DATA_DESIGNATION = [
         name: "HR Specialist",
     },
     {
-        name: "UX Designer",
+        name: "BA - Business Analyst",
     },
     {
-        name: "BA - Business Analyst",
+        name: "Sales Executive",
+    },
+    {
+        name: "Marketing Head",
     },
 ];
 

@@ -48,14 +48,12 @@ export const addEmployee = async (req, res, next) => {
 /**
  * Delete employee from database.
  */
-export const deleteEmployee = (req, res, next) => {
+export const deleteEmployee = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { index } = query.findOne(EMPLOYEE_DB_URL, id);
-        const employeeRecords = query.findAll(EMPLOYEE_DB_URL);
-        employeeRecords.splice(index, 1);
 
-        writeFile(EMPLOYEE_DB_URL, employeeRecords); //write into file.
+        await Employee.updateOne({ _id: id }, { isDeleted: true }).exec();
+        // await Employee.deleteOne({ _id: id }).exec();
 
         return res.status(200).send(successResponse(200, SUCCESS.S04));
     } catch (error) {

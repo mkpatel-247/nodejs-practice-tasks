@@ -16,9 +16,8 @@ const router = express.Router();
  * Home page route.
  */
 router.get("/", async (req, res, next) => {
-    const getEmployee = await employeeModel.find({}).lean();
-    console.log("🚀 ~ router.get ~ getEmployee:", getEmployee);
     const employee = await aggregateListEmployee();
+    console.log("🚀 ~ router.get ~ employee:", employee);
     res.render("list", {
         employee: employee,
         dateFilter,
