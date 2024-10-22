@@ -1,5 +1,3 @@
-Here’s your Markdown file content formatted for better readability and structure:
-
 ````markdown
 # MongoDB Task 1
 
