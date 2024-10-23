@@ -8,7 +8,7 @@ Find the document where the name of the trainee is Suchit. If it does not exist,
 db.Trainee.updateOne(
     { name: "Suchit" },
     {
-        $inc: { grades: 5 }, // This increments by 5
+        $inc: { grades: 5 }, // increments by 5
         $set: {
             age: 30.0,
             gender: "male",
@@ -173,6 +173,17 @@ db.Mentor.aggregate([
 
 List of unique designations with a mentor array having the same designation.
 
+```js
+db.Mentor.aggregate([
+    {
+        $group: {
+            _id: "$designation",
+            mentors: { $push: "$mentor" },
+        },
+    },
+]);
+```
+
 ## 8. Mentors with Trainee Details
 
 Get a list of mentors with trainee, returning the following fields:
@@ -180,13 +191,66 @@ Get a list of mentors with trainee, returning the following fields:
 -   Name with Designation (single field)
 -   Email Host (split email from @)
 
+```js
+db.Mentor.aggregate([
+    {
+        $lookup: {
+            from: "Trainee",
+            localField: "_id",
+            foreignField: "mentor",
+            as: "trainee_info",
+        },
+    },
+    {
+        $project: {
+            name: { $concat: ["$name", ", ", "$designation"] },
+            email: { $split: ["$email", "@"] },
+            trainee_details: "$trainee_info",
+        },
+    },
+]);
+```
+
 ## 9. Unique Cities, States, and Colleges
 
 Get a list of unique cities, states, and colleges in a single document.
 
+```js
+db.Trainee.aggregate([
+    {
+        $group: {
+            _id: null,
+            states: { $addToSet: "$address.state" },
+            cities: { $addToSet: "$address.city" },
+            colleges: { $addToSet: "$college" },
+        },
+    },
+    {
+        $project: {
+            _id: 0,
+            states: 1,
+            cities: 1,
+            colleges: 1,
+        },
+    },
+]);
+```
+
 ## 10. Update Address Fields
 
-Delete field "dob" where age is > 22, and add field "zipcode" under address with value 1234.
+Delete field "dob" where age is > 22, and add field "zipcode" under address with value 1234 in single query.
+
+```js
+db.Trainee.updateMany(
+    {
+        age: { $gt: 22 },
+    },
+    {
+        $unset: { dob: -1 },
+        $set: { "address.zipcode": 1234 },
+    }
+);
+```
 
 ## 11. Add Hobbies Array
 
@@ -194,20 +258,114 @@ Add a hobbies array to all the trainees:
 
 -   ["Cricket", "Watching Movies", "Bike Riding", "Football"]
 
+```js
+db.Trainee.updateMany(
+    {},
+    {
+        $set: {
+            hobbies: ["Cricket", "Watching Movies", "Bike Riding", "Football"],
+        },
+    }
+);
+```
+
 ## 12. Add More Hobbies
 
 Add the following array values to the hobbies array:
 
 -   ["Cars & Bike", "Cooking", "Hiking", "Travelling", "Vlogging"]
 
+```js
+db.Trainee.updateMany(
+    {},
+    {
+        $push: {
+            hobbies: {
+                $each: [
+                    "Cricket",
+                    "Watching Movies",
+                    "Bike Riding",
+                    "Football",
+                ],
+            },
+        },
+    }
+);
+```
+
 ## 13. List Trainee Groups by Mentor
 
 List of trainee groups by mentor, creating an array of trainee names.
+
+```js
+db.Mentor.aggregate([
+    {
+        $lookup: {
+            from: "Trainee",
+            localField: "_id",
+            foreignField: "mentor",
+            as: "trainee_info",
+        },
+    },
+    {
+        $unwind: "$trainee_info",
+    },
+    {
+        $group: {
+            _id: "$name",
+            trainee: { $push: "$trainee_info.name" },
+        },
+    },
+    {
+        $project: {
+            _id: 0,
+            mentor: "$_id",
+            trainee: 1,
+        },
+    },
+]);
+```
 
 ## 14. Cities with Number of Trainees
 
 List of cities with the number of trainees living in them.
 
+```js
+db.Trainee.aggregate([
+    {
+        $group: {
+            _id: "$address.city",
+            trainee: { $push: "$_id" },
+        },
+    },
+    {
+        $project: {
+            _id: 0,
+            city: "$_id",
+            no_of_trainee_living: { $size: "$trainee" },
+        },
+    },
+]);
+```
+
 ## 15. Sum of Grades by Gender
 
 The sum of grades of gender male and female.
+
+```js
+db.Trainee.aggregate([
+    {
+        $group: {
+            _id: "$gender",
+            totalGrades: { $sum: "$grades" },
+        },
+    },
+    {
+        $project: {
+            _id: 0,
+            gender: "$_id",
+            totalGrades: 1,
+        },
+    },
+]);
+```
