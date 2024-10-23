@@ -1,4 +1,3 @@
-````markdown
 # MongoDB Task 1
 
 ### Check Running Docker Container:
@@ -6,7 +5,6 @@
 ```bash
 docker ps
 ```
-````
 
 ### Start Docker Container and Mongosh:
 

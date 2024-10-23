@@ -1,4 +1,4 @@
-# MongoDB Task 2 Queries for Trainee Database
+# MongoDB Task 2
 
 ## 1. Find or Create Trainee
 
