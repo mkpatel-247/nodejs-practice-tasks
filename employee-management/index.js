@@ -2,11 +2,11 @@ import express from "express";
 import { engine } from "express-handlebars";
 import path from "path";
 import { connectDB } from "./config/db.config.js";
-import pageRoutes from "./routes/pages.routes.js";
-import apiRoutes from "./routes/api.routes.js";
-import { searchNameField } from "./helpers/findName.helper.js";
+import { compareObjectId } from "./helpers/common.helper.js";
 import helpers from "handlebars-helpers";
 import { formatDate, formatIndex } from "./helpers/format.helper.js";
+import employeeRoutes from "./routes/employee.routes.js";
+import salaryRoutes from "./routes/salary.routes.js";
 
 const PORT = 3000;
 const app = express();
@@ -19,9 +19,9 @@ app.engine(
         //Define all helpers.
         helpers: {
             helpers: helpers(),
-            findName: searchNameField,
             date: formatDate,
             index: formatIndex,
+            compareId: compareObjectId,
         },
     })
 );
@@ -34,8 +34,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join("public")));
 
-app.use("/", pageRoutes);
-app.use("/api", apiRoutes);
+app.use("/", employeeRoutes);
+app.use("/api", salaryRoutes);
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(
@@ -46,7 +46,7 @@ app.listen(process.env.PORT || PORT, () => {
 
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
-    console.log("Uncaught exception...");
+    console.log("Uncaught exception...", err.message);
 
     // res.render("error");
 });

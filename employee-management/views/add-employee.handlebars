@@ -1,92 +1,80 @@
 <div class="container">
     {{> page-heading heading=pageTitle}}
-    {{#unless formField}}
     <form id="add-employee-form" class="row g-3">
         <div class="col-md-6">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="emp-name" placeholder="Enter your name." required>
+            <input type="text" class="form-control" id="emp-name" placeholder="Enter your name." required
+                value="{{#if formField}}{{formField.name}}{{/if}}">
         </div>
         <div class="col-md-6">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="emp-email" placeholder="Enter your email." required>
+            <input type="email" class="form-control" id="emp-email" placeholder="Enter your email." required
+                value="{{#if formField}}{{formField.email}}{{/if}}">
         </div>
-        <div class="col-md-4">
-            <label for="joiningDate" class="form-label">Joining date</label>
-            <input type="date" class="form-control" id="emp-joining-date" required>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label for="department" class="form-label">Department</label>
 
             <select id="emp-department" class="form-select" required>
                 <option value="" selected>Choose...</option>
                 {{#each department}}
-                <option value="{{this._id}}"> {{this.name}} </option>
+                <option value="{{this._id}}" {{#if (compareId _id ../formField.department)}}selected{{/if}}>
+                    {{this.name}} </option>
                 {{/each}}
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label for="designation" class="form-label">Designation</label>
             <select id="emp-designation" class="form-select" required>
                 <option value="" selected>Choose...</option>
                 {{#each designation}}
-                <option value="{{_id}}">{{name}}</option>
+                <option value="{{_id}}" {{#if (compareId _id ../formField.designation)}}selected{{/if}}>
+                    {{name}}
+                </option>
                 {{/each}}
             </select>
         </div>
-        <div class="col-md-5">
-            <div class="form-group row d-flex align-items-center">
-                <label for="gender" class="col-md-2 col-form-label">Gender</label>
-                <div class="col-md-6">
-                    <div class="d-flex gap-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="emp-gender" id="gender-male" value="Male"
-                                checked>
-                            <label class="form-check-label" for="gender">
-                                Male
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="emp-gender" id="gender-female"
-                                value="Female">
-                            <label class="form-check-label" for="gender">
-                                Female
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="emp-gender" id="gender-other"
-                                value="Other">
-                            <label class="form-check-label" for="gender">
-                                Other
-                            </label>
-                        </div>
-                    </div>
+        <div class="col-md-6">
+            <label for="joiningDate" class="form-label">Joining date</label>
+            <input type="date" class="form-control" id="emp-joining-date" required value="{{formField.joiningDate}}">
+        </div>
+
+        <div class="col-md-6">
+            <label for="gender" class="form-label">Gender</label>
+            <div class="col-md-6 d-flex gap-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="emp-gender" id="gender-male" value="Male" {{#if
+                        (compareId "Male" formField.gender)}}checked{{/if}} {{#unless
+                        formField.gender}}checked{{/unless}}>
+                    <label class="form-check-label" for="gender">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="emp-gender" id="gender-female" value="Female"
+                        {{#if (compareId "Female" formField.gender)}}checked{{/if}}>
+                    <label class="form-check-label" for="gender">
+                        Female
+                    </label>
                 </div>
             </div>
         </div>
 
+        {{#if formField._id}}
+        <div class="col-md-6">
+            <label for="salary" class="form-label">Salary</label>
+            <input type="hidden" name="emp-id" id="emp-id" value="{{formField._id}}">
+            <input type="number" name="emp-salary" class="form-control" id="emp-salary" data-type="currency"
+                placeholder="Enter salary." value="{{formField.salary}}" required>
+        </div>
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Update record</button>
+            <a href="/" type="button" class="btn btn-outline-primary">Go back</a>
+        </div>
+        {{else}}
         <div class="col-12 d-flex gap-2">
             <button type="submit" class="btn btn-primary">Add Employee</button>
             <button type="reset" class="btn btn-outline-danger">Reset</button>
         </div>
+        {{/if}}
     </form>
-    {{/unless}}
-
-    {{#if formField}}
-    <form id="salary-form">
-        <div class="col-md-7">
-            <div class="form-group row d-flex align-items-center">
-                <label for="salary" class="col-md-2 col-form-label">Salary</label>
-                <div class="col-md-5">
-                    <input type="hidden" name="emp-id" id="emp-id" value="{{formField.id}}">
-                    <input type="number" name="emp-salary" class="form-control" id="emp-salary" data-type="currency"
-                        placeholder="Enter salary." value="{{formField.salary}}" required>
-                </div>
-            </div>
-        </div>
-        <div class="mt-2">
-            <button type="submit" class="btn btn-primary">Update Salary</button>
-            <a href="/" type="button" class="btn btn-outline-primary">Go back</a>
-        </div>
-    </form>
-    {{/if}}
 </div>

@@ -1,5 +1,4 @@
 import moment from "moment";
-import { EMPLOYEE_DB_URL } from "../config/db-url.constant.js";
 import { query } from "../controllers/query.js";
 
 /**

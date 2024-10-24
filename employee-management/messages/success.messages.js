@@ -6,4 +6,5 @@ export const SUCCESS = {
     S05: "Employee details.",
     S06: "Salary sent successfully.",
     S07: "Already salary sent successfully.",
+    S08: "Employee details updated.",
 };

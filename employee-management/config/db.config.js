@@ -1,12 +1,4 @@
 import mongoose from "mongoose";
-import fs from "fs";
-import {
-    DB_DIR_URL,
-    DEPARTMENT_DB_URL,
-    DESIGNATION_DB_URL,
-    EMPLOYEE_DB_URL,
-    SALARY_HISTORY_DB_URL,
-} from "./db-url.constant.js";
 import designationModel from "../models/designation.model.js";
 import departmentModel from "../models/department.model.js";
 
@@ -50,50 +42,6 @@ const SAMPLE_DATA_DESIGNATION = [
         name: "Marketing Head",
     },
 ];
-
-const checkDir = () => {
-    if (!fs.existsSync(DB_DIR_URL)) {
-        fs.mkdirSync(DB_DIR_URL);
-    }
-};
-
-const checkEmployeeData = () => {
-    if (!fs.existsSync(EMPLOYEE_DB_URL)) {
-        fs.writeFileSync(EMPLOYEE_DB_URL, JSON.stringify([]));
-    }
-};
-
-const checkDepartmentData = () => {
-    if (!fs.existsSync(DEPARTMENT_DB_URL)) {
-        fs.writeFileSync(
-            DEPARTMENT_DB_URL,
-            JSON.stringify(SAMPLE_DATA_DEPARTMENT)
-        );
-    }
-};
-
-const checkDesignationData = () => {
-    if (!fs.existsSync(DESIGNATION_DB_URL)) {
-        fs.writeFileSync(
-            DESIGNATION_DB_URL,
-            JSON.stringify(SAMPLE_DATA_DESIGNATION)
-        );
-    }
-};
-
-const checkSalaryHistoryData = () => {
-    if (!fs.existsSync(SALARY_HISTORY_DB_URL)) {
-        fs.writeFileSync(SALARY_HISTORY_DB_URL, JSON.stringify([]));
-    }
-};
-
-export const isDbExists = () => {
-    checkDir();
-    checkEmployeeData();
-    checkDepartmentData();
-    checkDesignationData();
-    checkSalaryHistoryData();
-};
 
 export const connectDB = () => {
     return mongoose

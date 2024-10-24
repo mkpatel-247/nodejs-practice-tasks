@@ -1,19 +1,28 @@
-import { EMPLOYEE_DB_URL } from "../config/db-url.constant.js";
-import { query } from "../controllers/query.js";
 import { ERROR } from "../messages/error.message.js";
+import employeeModel from "../models/employee.model.js";
 import { errorResponse } from "../utils/api-response.js";
 
 /**
  * Check the employee salary exist or not. In employee table.
  */
-export const isSalaryExist = (req, res, next) => {
+export const isSalaryExist = async (req, res, next) => {
     try {
         const { ids } = req.body;
-        const employeeData = query.findAll(EMPLOYEE_DB_URL);
+        //TODO: Filter the for isPaid or not.
+        /* const employeeData = await employeeModel.aggregate([
+            {
+                $match: {
+                    $and: [{ salary: { $ne: 0 } }, { isDeleted: false }],
+                },
+            },
+            {
+                $match: { _id: {} },
+            },
+        ]); // query.findAll(EMPLOYEE_DB_URL); */
 
-        const data = employeeData.filter((record) => {
-            return ids.includes(record.id) && !record.salary;
-        });
+        // const data = employeeData.filter((record) => {
+        //     return ids.includes(record.id) && !record.salary;
+        // });
 
         if (!data.length) {
             return next();

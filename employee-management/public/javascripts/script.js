@@ -2,12 +2,15 @@ $(function () {
     $(document).on("submit", "#add-employee-form", async function (event) {
         event.preventDefault();
 
+        const id = $("#emp-id").val();
+        console.log("🚀 ~ id:", id);
         const name = $("#emp-name").val();
         const email = $("#emp-email").val();
         const joiningDate = $("#emp-joining-date").val();
         const department = $("#emp-department").val();
         const designation = $("#emp-designation").val();
         const gender = $("input[name='emp-gender']:checked").val();
+        const salary = $("#emp-salary").val();
 
         // Make an API call to add employee.
         try {
@@ -17,16 +20,19 @@ $(function () {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
+                    id,
                     name,
                     email,
                     joiningDate,
                     department,
                     designation,
                     gender,
+                    salary,
                 }),
             });
             const result = await res.json();
-            if (result.status === 200) {
+
+            if (result.status === 200 || result.status === 201) {
                 window.location.replace("/");
             } else {
                 alert(`Error: >> ${result.message}`);
@@ -69,6 +75,7 @@ $(function () {
                 },
             });
             const result = await res.json();
+            console.log("🚀 ~ result:", result);
             if (result.status == 200) {
                 window.location.replace(`/add-emp?id=${id}`);
             }

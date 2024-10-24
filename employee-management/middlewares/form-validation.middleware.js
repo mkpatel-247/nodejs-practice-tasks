@@ -1,8 +1,6 @@
 import validator from "validator";
 import { errorResponse } from "../utils/api-response.js";
 import { ERROR } from "../messages/error.message.js";
-import { query } from "../controllers/query.js";
-import { EMPLOYEE_DB_URL } from "../config/db-url.constant.js";
 
 /**
  * Validate email input.
